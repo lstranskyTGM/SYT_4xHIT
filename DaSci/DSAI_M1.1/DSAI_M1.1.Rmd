@@ -1,0 +1,74 @@
+---
+title: "DSAI_M1.1"
+author: "Leonhard Stransky"
+date: "2023-11-06"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Statistische Konzepte und Datenanalyse
+In diesem Abschnitt werden grundlegende statistische Konzepte und Techniken für die Datenanalyse behandelt. Die folgende Zusammenfassung bietet eine Übersicht über die behandelten Themen und enthält auch einige Codebeispiele in R.
+
+## Arithmetischer Mittelwert, Median und Modus
+Der arithmetische Mittelwert ist ein Maß für die durchschnittliche zentrale Tendenz von Daten. Er wird berechnet, indem man alle Datenwerte addiert und durch die Gesamtanzahl der Werte dividiert.
+
+### Berechnung des arithmetischen Mittelwerts in R
+```{r, echo=TRUE}
+data <- c(5, 10, 15, 20, 25)
+mean_value <- mean(data)
+print(mean_value)
+```
+Der Median ist der Wert, der in der Mitte der sortierten Daten liegt. Es teilt die Daten in zwei Hälften, wobei die Hälfte der Werte kleiner und die andere Hälfte größer ist.
+
+### Berechnung des Medians in R
+```{r, echo=TRUE}
+data <- c(5, 10, 15, 20, 25)
+median_value <- median(data)
+print(median_value)
+```
+Der Modus ist der Wert, der in den Daten am häufigsten vorkommt. Es ist das Maß für die größte Häufigkeit.
+
+### Berechnung des Modus in R (mit der Mode-Funktion aus dem "modeest" Paket)
+```{r, echo=TRUE}
+data <- c(5, 10, 15, 20, 25, 15, 20)
+library(modeest)
+mode_value <- getmode(data)
+print(mode_value)
+```
+
+## Histogramm
+Ein Histogramm ist eine grafische Darstellung der Verteilung von Daten. Es gruppiert Daten in Intervalle (Bins) und zählt, wie viele Datenpunkte in jedem Intervall liegen. Dies hilft, Muster und Spitzen in den Daten zu erkennen.
+
+### Erstellen eines Histogramms in R
+```{r, echo=TRUE}
+data <- c(35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95)
+hist(data, breaks = 5, main = "Histogramm der Daten", xlab = "Werte", ylab = "Häufigkeit")
+```
+
+## Boxplot
+Ein Boxplot ist eine weitere Darstellung der Verteilung von Daten. Es basiert auf den Quartilen der Daten und zeigt den Median, die interquartile Distanz und potenzielle Ausreißer.
+
+### Erstellen eines Boxplots in R
+```{r, echo=TRUE}
+data <- c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200)
+boxplot(data, main = "Boxplot der Daten", xlab = "Daten", ylab = "Werte")
+```
+
+## Quantil-Quantil-Plot (QQ-Plot)
+Ein QQ-Plot vergleicht die Verteilung der Daten mit einer theoretischen Normalverteilung. Wenn die Daten auf einer Linie liegen, sind sie normal verteilt. Abweichungen deuten auf Nicht-Normalverteilung hin.
+
+### Erstellen eines QQ-Plots in R
+```{r, echo=TRUE}
+data <- rnorm(100)  # Erzeugen von zufälligen Normalverteilten Daten
+qqnorm(data)
+qqline(data)
+```
+
+## Bedeutung für statistische Analysen
+Die Analyse der Datenverteilung ist entscheidend für die Auswahl und Anwendung von statistischen Tests und Modellen. Normalverteilte Daten ermöglichen den Einsatz klassischer statistischer Verfahren, während Nicht-Normalverteilung alternative Methoden erfordern kann. Es ist wichtig, Ausreißer zu erkennen und zu behandeln, da sie die Ergebnisse von Analysen stark beeinflussen können.
+
+Die oben genannten Konzepte sind entscheidende Schritte in der Datenexploration und bilden die Grundlage für weiterführende statistische Analysen und Modellierungen. Daher ist es wichtig, sie zu verstehen und anzuwenden, um fundierte Schlussfolgerungen aus den Daten ziehen zu können.
+

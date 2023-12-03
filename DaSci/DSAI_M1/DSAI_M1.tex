@@ -1,0 +1,2405 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={DSAI\_M1},
+  pdfauthor={Leonhard Stransky},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{DSAI\_M1}
+\author{Leonhard Stransky}
+\date{2023-09-19}
+
+\begin{document}
+\maketitle
+
+\hypertarget{data-science-einfuxfchrung-in-relevante-softwareumgebungen}{%
+\section{Data Science ``Einführung in relevante
+Softwareumgebungen'\,'}\label{data-science-einfuxfchrung-in-relevante-softwareumgebungen}}
+
+\hypertarget{einfuxfchrung}{%
+\subsection{Einführung:}\label{einfuxfchrung}}
+
+Die Theorieeinheiten sollen als Hintergrundinformation zur Durchführung
+einer eigenen Analyse dienen. Zum Umgang mit R und RStudio oder Python
+ist der Link aus den Theorie Einheiten empfohlen. Als Vorlage für die
+Laborprotokolle steht euch im Kurs ein Template für R Markdown zur
+Verfügung.
+
+\hypertarget{ziele}{%
+\subsection{Ziele:}\label{ziele}}
+
+Das Ziel ist es, \href{https://learn.datacamp.com/}{DataCamp} als
+Anleitung und R als Werkzeug zur Datenexploration und Visualisierung
+selbständig einsetzen und erste Ergebnisse interpretieren zu können.
+
+\hypertarget{aufgabe-1gk}{%
+\subsection{Aufgabe 1(GK):}\label{aufgabe-1gk}}
+
+Erarbeite dir durch den Kurs
+\href{https://methodenlehre.github.io/einfuehrung-in-R/}{Einführung in
+R} in den Kapiteln 2 bis 4 die Grundlagen der Sprache Programmiersprache
+R und vertiefe dich dann in Visualisierung mit der Library `ggplot' in
+Kapitel 5. Fasse zusätzlich die Inhalte von
+\href{https://www.w3schools.com/r/}{w3schools} der Kapitel ``Tutorial''
+und ``Data Structures'' (GK)
+
+Führe dabei ein Protokoll in einem Markdown File über Informationen,
+Dokumentation und Codes als Nachschlagemöglichkeit, da dir der Kurs nur
+für 6 Monate zur Verfügung stehen wird.
+
+\pagebreak
+
+\hypertarget{die-r-sprache}{%
+\subsection{2. Die R Sprache:}\label{die-r-sprache}}
+
+\hypertarget{uxfcbung1}{%
+\subsubsection{Übung1:}\label{uxfcbung1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1}\SpecialCharTok{/}\DecValTok{3} \SpecialCharTok{*}\NormalTok{ ((}\DecValTok{1}\SpecialCharTok{+}\DecValTok{3}\SpecialCharTok{+}\DecValTok{5}\SpecialCharTok{+}\DecValTok{7}\SpecialCharTok{+}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{3}\SpecialCharTok{+}\DecValTok{5}\SpecialCharTok{+}\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{exp}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.718282
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.414214
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{8}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{log2}\NormalTok{(}\DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\hypertarget{uxfcbung2}{%
+\subsubsection{Übung2:}\label{uxfcbung2}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Erzeugen Sie eine Sequenz von 0 bis 100 in 5-er Schritten.
+\item
+  Berechnen Sie den Mittelwert des Vektors {[}1, 3, 4, 7, 11, 2{]}.
+\item
+  Lassen Sie sich die Spannweite x(max)-x(min) dieses Vektors ausgeben.
+\item
+  Berechnen Sie die Summe dieses Vektors.
+\item
+  Zentrieren Sie diesen Vektor.
+\item
+  Simulieren Sie einen Münzwurf mit der Funktion sample(). Tipp: nehmen
+  Sie für Kopf 1 und für Zahl 0. Simulieren Sie 100 Münzwürfe.
+\item
+  Simulieren Sie eine Trick-Münze mit P!=0.5
+\item
+  Generieren Sie einen Vektor, der aus 100 Wiederholungen der Zahl 3
+  besteht.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =} \DecValTok{100}\NormalTok{, }\AttributeTok{by =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   0   5  10  15  20  25  30  35  40  45  50  55  60  65  70  75  80  85  90
+## [20]  95 100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.666667
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\NormalTok{b[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ b[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 28
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{scale}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{center =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{scale =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            [,1]
+## [1,] -3.6666667
+## [2,] -1.6666667
+## [3,] -0.6666667
+## [4,]  2.3333333
+## [5,]  6.3333333
+## [6,] -2.6666667
+## attr(,"scaled:center")
+## [1] 4.666667
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{size =} \DecValTok{100}\NormalTok{, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] 1 0 1 1 0 0 0 0 0 1 0 0 1 0 1 0 0 0 1 0 1 1 0 1 1 1 1 1 1 1 0 0 1 0 1 0 1
+##  [38] 1 1 0 0 0 0 0 1 0 0 1 0 1 0 1 0 1 1 1 0 0 0 1 0 1 1 1 1 1 1 1 1 0 0 0 0 0
+##  [75] 0 0 0 1 1 1 1 1 1 0 0 1 1 0 0 0 0 0 0 1 1 0 0 1 0 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{size =} \DecValTok{100}\NormalTok{, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] 1 1 0 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1
+##  [38] 1 1 1 1 1 0 1 1 1 1 0 0 1 1 1 0 1 1 1 0 1 0 1 1 1 1 1 1 1 0 1 1 1 1 1 1 0
+##  [75] 0 1 0 0 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 0 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rep}\NormalTok{(}\DecValTok{3}\NormalTok{, }\AttributeTok{times =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+##  [38] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+##  [75] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+\end{verbatim}
+
+\hypertarget{uxfcbung3}{%
+\subsubsection{Übung3:}\label{uxfcbung3}}
+
+Wiederholen Sie einige der Beispiele von oben, aber speichern Sie
+diesmal die Resultate in neuen Variablen ab. Sie können die Variablen
+dann für weitere Operationen wieder verwenden.
+
+\begin{verbatim}
+## [1] 4.666667
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 4.7
+\end{verbatim}
+
+\hypertarget{uxfcbung4}{%
+\subsubsection{Übung4:}\label{uxfcbung4}}
+
+Tippen Sie in der Konsole scale( und drücken Sie TAB. Sie sehen, dass
+diese Funktion drei Argumente hat, x, center und scale. Schreiben Sie
+scale(vektor, scale = gefolgt von TAB. Sie sehen, dass scale = TRUE den
+default Wert TRUE hat.
+
+Was sind die Argumente der Funktion round()? Hat eines der Argumente
+einen default Wert?
+
+Schauen Sie im Help Viewer nach, was die Funktion rnorm() macht. Was
+sind die Argumente. Was bedeuten die default Werte?
+
+Schauen Sie im Help Viewer nach, welche Argumente die seq() Funktion
+hat.
+
+Was machen folgende Funktionsaufrufe?
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 1 3 5 7 9
+\end{verbatim}
+
+\begin{verbatim}
+##  [1]  1.000000  1.473684  1.947368  2.421053  2.894737  3.368421  3.842105
+##  [8]  4.315789  4.789474  5.263158  5.736842  6.210526  6.684211  7.157895
+## [15]  7.631579  8.105263  8.578947  9.052632  9.526316 10.000000
+\end{verbatim}
+
+round:
+
+Bsp: round(x, digits = 1)
+
+x ist die Zahl oder der Vektor
+
+digits ist die Anzahl der Dezimalstellen auf die gerundet werden soll
+
+Die Verwendung von Digits ist optional und hat einen default wert von 0.
+
+rnorm: Dies wird verwendet um Zufallszahlen aus einer Normalverteilung
+zu generieren.
+
+Bsp: rnorm(n, mean = 0, sd = 1)
+
+n ist die Anzahl der Zufallszahlen. (erfordert)
+
+mean ist der Durchschnitt (Mittelwert) der Normalverteilung.
+
+sd ist die Standardabweichung der Normalverteilung.
+
+mean und sd sind optionale Argumente. mean hat als default wert 0 sund
+sd 1 (Dies enstpspricht einer Standardnormalverteilung)
+
+seq: Dies wird verwendet um reguläre Sequenzen von Zahlen zu generieren.
+
+Bsp: seq()´
+
+seq(from, to, by, length.out, along.with, \ldots)
+
+from ist der Startwert der Sequenz. (optional) (default wert: 1)
+
+to: Der Endwert der Sequenz. (optional) (default wert: 1)
+
+by: Der Inkrementwert, um den die Sequenz erhöht wird. (optional)
+default wert wird automatisch berechnet, um die gewünschte Länge der
+Sequenz length.out zu erreichen.
+
+length.out: Die gewünschte Länge der Sequenz. (optional) default wert
+ist NULL. Wenn length.out nicht angegeben wird, wird die Länge der
+Sequenz basierend auf den anderen Argumenten berechnet.
+
+along.with: Übernimmt die Länge der Sequenz von einem anderen Vektor
+oder einer anderen Sequenz. (optional)
+
+\hypertarget{character-vektors}{%
+\subsubsection{Character Vektors}\label{character-vektors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{letters[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "a" "b" "c"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{text }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"these are"}\NormalTok{, }\StringTok{"some strings"}\NormalTok{)}
+\NormalTok{text}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "these are"    "some strings"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(text)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vorname }\OtherTok{\textless{}{-}} \StringTok{"Ronald Aylmer"}
+\NormalTok{nachname }\OtherTok{\textless{}{-}} \StringTok{"Fisher"}
+\FunctionTok{paste}\NormalTok{(}\StringTok{"Mein Name ist:"}\NormalTok{, vorname, nachname, }\AttributeTok{sep =} \StringTok{" "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Mein Name ist: Ronald Aylmer Fisher"
+\end{verbatim}
+
+\hypertarget{logical-vectors}{%
+\subsubsection{Logical vectors}\label{logical-vectors}}
+
+Logische Vektoren werden vor allem dazu benutzt, um numerische Vektoren
+zu indizieren, z.B. um alle positiven Elemente eines Vektors
+auszuwählen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{24}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  0.67719270  0.31045298 -0.51651979  0.68036338  0.56341661  1.03551009
+##  [7]  0.08964888 -0.13865505 -0.69764687 -1.91330317  1.80536838  0.36199042
+## [13] -1.08775222 -0.07500418  0.56021014  1.76708829  0.12882955  0.41319518
+## [19]  0.86110875  1.73572936  0.27503446 -0.64168612 -0.03523950  0.64335096
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\textgreater{}} \DecValTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE
+## [13] FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2834451
+\end{verbatim}
+
+man kann auch bei dieses Vektors den Mittelwert bestimmen
+
+\hypertarget{factors}{%
+\subsubsection{Factors}\label{factors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{geschlecht }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"male"}\NormalTok{, }\StringTok{"female"}\NormalTok{, }\StringTok{"male"}\NormalTok{, }\StringTok{"male"}\NormalTok{, }\StringTok{"female"}\NormalTok{)}
+\NormalTok{geschlecht}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "male"   "female" "male"   "male"   "female"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(geschlecht)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{geschlecht }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(geschlecht, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"female"}\NormalTok{, }\StringTok{"male"}\NormalTok{))}
+\NormalTok{geschlecht}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] male   female male   male   female
+## Levels: female male
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(geschlecht)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+Hier kann man sehen das durch das Anwenden der methode Faktor man
+verschhiedene level bestimmen kann --\textgreater{} so werden die Werte
+zu Integern und geschlecht zu der Klasse Faktor Mit factor() kann man
+die Reihenfolge genau bestimmen - es müssen aber alle Stufen explizit
+angegeben werden.
+
+\hypertarget{lists}{%
+\subsubsection{Lists}\label{lists}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\StringTok{"a"}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{, }\ConstantTok{TRUE}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\FloatTok{2.3}\NormalTok{, }\FloatTok{5.9}\NormalTok{))}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 1 2 3
+## 
+## [[2]]
+## [1] "a"
+## 
+## [[3]]
+## [1]  TRUE FALSE  TRUE
+## 
+## [[4]]
+## [1] 2.3 5.9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "a"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{int =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}
+          \AttributeTok{string =} \StringTok{"a"}\NormalTok{,}
+          \AttributeTok{log =} \FunctionTok{c}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{, }\ConstantTok{TRUE}\NormalTok{),}
+          \AttributeTok{double =} \FunctionTok{c}\NormalTok{(}\FloatTok{2.3}\NormalTok{, }\FloatTok{5.9}\NormalTok{))}
+\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $int
+## [1] 1 2 3
+## 
+## $string
+## [1] "a"
+## 
+## $log
+## [1]  TRUE FALSE  TRUE
+## 
+## $double
+## [1] 2.3 5.9
+\end{verbatim}
+
+\hypertarget{data-frames}{%
+\subsubsection{Data Frames}\label{data-frames}}
+
+Nun kommen wir zu dem für uns wichtigsten Objekt in R, dem Data Frame.
+Datensätze werden in R durch Data Frames repräsentiert. Ein Data Frame
+besteht aus Zeilen (rows) und Spalten (columns). Technisch gesehen ist
+ein Data Frame eine Liste, deren Elemente gleichlange (equal-length)
+Vektoren sind.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attache Paket: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## Die folgenden Objekte sind maskiert von 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## Die folgenden Objekte sind maskiert von 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{geschlecht =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"male"}\NormalTok{, }\StringTok{"female"}\NormalTok{,}
+                                   \StringTok{"male"}\NormalTok{, }\StringTok{"male"}\NormalTok{,}
+                                   \StringTok{"female"}\NormalTok{)),}
+             \AttributeTok{alter =} \FunctionTok{c}\NormalTok{(}\DecValTok{22}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{30}\NormalTok{))}
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+##   geschlecht alter
+##   <fct>      <dbl>
+## 1 male          22
+## 2 female        45
+## 3 male          33
+## 4 male          27
+## 5 female        30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{attributes}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $class
+## [1] "tbl_df"     "tbl"        "data.frame"
+## 
+## $row.names
+## [1] 1 2 3 4 5
+## 
+## $names
+## [1] "geschlecht" "alter"
+\end{verbatim}
+
+\hypertarget{w3schools}{%
+\subsection{W3schools:}\label{w3schools}}
+
+\hypertarget{r-tutorial}{%
+\subsubsection{R Tutorial:}\label{r-tutorial}}
+
+\hypertarget{r-comments}{%
+\paragraph{R Comments:}\label{r-comments}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This is a comment}
+\StringTok{"Hello World!"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hello World!"
+\end{verbatim}
+
+\hypertarget{r-variables}{%
+\paragraph{R Variables:}\label{r-variables}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{name }\OtherTok{\textless{}{-}} \StringTok{"John"}
+\NormalTok{age }\OtherTok{\textless{}{-}} \DecValTok{40}
+
+\NormalTok{name   }\CommentTok{\# output "John"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "John"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{age    }\CommentTok{\# output 40}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 40
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Concatenate Elements:}
+\NormalTok{text }\OtherTok{\textless{}{-}} \StringTok{"awesome"}
+
+\FunctionTok{paste}\NormalTok{(}\StringTok{"R is"}\NormalTok{, text)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "R is awesome"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Multiple Variables:}
+
+\CommentTok{\# Assign the same value to multiple variables in one line:}
+\NormalTok{var1 }\OtherTok{\textless{}{-}}\NormalTok{ var2 }\OtherTok{\textless{}{-}}\NormalTok{ var3 }\OtherTok{\textless{}{-}} \StringTok{"Orange"}
+
+\CommentTok{\# Print variable values:}
+\NormalTok{var1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Variabel Names:}
+
+\CommentTok{\# Legal variable names:}
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \StringTok{"John"}
+\NormalTok{my\_var }\OtherTok{\textless{}{-}} \StringTok{"John"}
+\NormalTok{myVar }\OtherTok{\textless{}{-}} \StringTok{"John"}
+\NormalTok{MYVAR }\OtherTok{\textless{}{-}} \StringTok{"John"}
+\NormalTok{myvar2 }\OtherTok{\textless{}{-}} \StringTok{"John"}
+\NormalTok{.myvar }\OtherTok{\textless{}{-}} \StringTok{"John"}
+
+\CommentTok{\# Illegal variable names:}
+\CommentTok{\# 2myvar \textless{}{-} "John"}
+\CommentTok{\# my{-}var \textless{}{-} "John"}
+\CommentTok{\# my var \textless{}{-} "John"}
+\CommentTok{\# \_my\_var \textless{}{-} "John"}
+\CommentTok{\# my\_v@ar \textless{}{-} "John"}
+\CommentTok{\# TRUE \textless{}{-} "John"}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{r-data-types}{%
+\paragraph{R Data Types:}\label{r-data-types}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  numeric - (10.5, 55, 787)
+\item
+  integer - (1L, 55L, 100L, where the letter ``L'' declares this as an
+  integer)
+\item
+  complex - (9 + 3i, where ``i'' is the imaginary part)
+\item
+  character (a.k.a. string) - (``k'', ``R is exciting'', ``FALSE'',
+  ``11.5'')
+\item
+  logical (a.k.a. boolean) - (TRUE or FALSE)
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# numeric}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FloatTok{10.5}
+\FunctionTok{class}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# integer}
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ 1000L}
+\FunctionTok{class}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# complex}
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ 9i }\SpecialCharTok{+} \DecValTok{3}
+\FunctionTok{class}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "complex"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# character/string}
+\NormalTok{x }\OtherTok{\textless{}{-}} \StringTok{"R is exciting"}
+\FunctionTok{class}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# logical/boolean}
+\NormalTok{x }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
+\FunctionTok{class}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "logical"
+\end{verbatim}
+
+\hypertarget{r-numbers}{%
+\paragraph{R Numbers:}\label{r-numbers}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# R Numbers:}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FloatTok{10.5}   \CommentTok{\# numeric}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ 10L    }\CommentTok{\# integer}
+\NormalTok{z }\OtherTok{\textless{}{-}}\NormalTok{ 1i     }\CommentTok{\# complex}
+
+\CommentTok{\# Type Conversion:}
+\FunctionTok{as.numeric}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## numeric(0)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{as.integer}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## integer(0)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{as.complex}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## complex(0)
+\end{verbatim}
+
+\hypertarget{r-math}{%
+\paragraph{R Math:}\label{r-math}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{max}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{15}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{min}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{15}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(}\DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{abs}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{4.7}\NormalTok{) }\CommentTok{\# Returns positive Value}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ceiling}\NormalTok{(}\FloatTok{1.4}\NormalTok{) }\CommentTok{\# Rounds the number up}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{floor}\NormalTok{(}\FloatTok{1.4}\NormalTok{) }\CommentTok{\# Rounds the number down}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\hypertarget{r-strings}{%
+\paragraph{R Strings:}\label{r-strings}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{str }\OtherTok{\textless{}{-}} \StringTok{"Hello"}
+\NormalTok{str }\CommentTok{\# print the value of str}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hello"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# For multiple lines use ,}
+\NormalTok{str }\OtherTok{\textless{}{-}} \StringTok{"Lorem ipsum dolor sit amet,}
+\StringTok{consectetur adipiscing elit,}
+\StringTok{sed do eiusmod tempor incididunt}
+\StringTok{ut labore et dolore magna aliqua."}
+
+\NormalTok{str }\CommentTok{\# print the value of str}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua."
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(str) }\CommentTok{\# To set the line brakes at the same position as the code}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Lorem ipsum dolor sit amet,
+## consectetur adipiscing elit,
+## sed do eiusmod tempor incididunt
+## ut labore et dolore magna aliqua.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nchar}\NormalTok{(str) }\CommentTok{\# To get the length of a string}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 123
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# For finding characters and sequences}
+\NormalTok{str }\OtherTok{\textless{}{-}} \StringTok{"Hello World!"}
+
+\FunctionTok{grepl}\NormalTok{(}\StringTok{"H"}\NormalTok{, str)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grepl}\NormalTok{(}\StringTok{"Hello"}\NormalTok{, str)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grepl}\NormalTok{(}\StringTok{"X"}\NormalTok{, str)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+Escape Symbols:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbackslash{} Backslash
+\item
+  \textbackslash{} New Line
+\item
+  \r   Carriage Return
+\item
+  \t   Tab
+\item
+  \b   Backspace
+\end{enumerate}
+
+\hypertarget{r-operators}{%
+\paragraph{R Operators:}\label{r-operators}}
+
+Arithmetic Operators:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \begin{itemize}
+  \tightlist
+  \item
+    Addition
+  \end{itemize}
+\item
+  \begin{itemize}
+  \tightlist
+  \item
+    Subtraction
+  \end{itemize}
+\item
+  \begin{itemize}
+  \tightlist
+  \item
+    Multiplication\\
+  \end{itemize}
+\item
+  / Division\\
+\item
+  \texttt{\^{}} Exponent\\
+\item
+  \%\% Modulus (Remainder from division)\\
+\item
+  \%/\% Integer Division
+\end{enumerate}
+
+Assignment Operators:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_var }\OtherTok{\textless{}{-}} \DecValTok{3}
+
+\NormalTok{my\_var }\OtherTok{\textless{}\textless{}{-}} \DecValTok{3}
+
+\DecValTok{3} \OtherTok{{-}\textgreater{}}\NormalTok{ my\_var}
+
+\DecValTok{3} \OtherTok{{-}\textgreater{}\textgreater{}}\NormalTok{ my\_var}
+
+\NormalTok{my\_var }\CommentTok{\# print my\_var}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+Comparison Operators:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  == Equal\\
+\item
+  != Not equal\\
+\item
+  \begin{quote}
+  Greater than
+  \end{quote}
+\item
+  \textless{} Less than\\
+\item
+  \begin{quote}
+  = Greater than or equal to
+  \end{quote}
+\item
+  \textless= Less than or equal to
+\end{enumerate}
+
+Logical Operators:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \& Element-wise Logical AND operator. It returns TRUE if both elements
+  are TRUE
+\item
+  \&\& Logical AND operator - Returns TRUE if both statements are TRUE
+\item
+  ~~~Elementwise- Logical OR operator. It returns TRUE if one of the
+  statement is TRUE
+\item
+  \textbar\textbar{} Logical OR operator. It returns TRUE if one of the
+  statement is TRUE.
+\item
+  ! Logical NOT - returns FALSE if statement is TRUE
+\end{enumerate}
+
+Miscellaneous Operators:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  : Creates a series of numbers in a sequence\\
+\item
+  \%in\% Find out if an element belongs to a vector\\
+\item
+  \%*\% Matrix Multiplication
+\end{enumerate}
+
+\hypertarget{r-functions}{%
+\paragraph{R Functions:}\label{r-functions}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{str }\OtherTok{\textless{}{-}} \StringTok{"Hello"}
+\NormalTok{str }\CommentTok{\# print the value of str}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hello"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# For multiple lines use ,}
+\NormalTok{str }\OtherTok{\textless{}{-}} \StringTok{"Lorem ipsum dolor sit amet,}
+\StringTok{consectetur adipiscing elit,}
+\StringTok{sed do eiusmod tempor incididunt}
+\StringTok{ut labore et dolore magna aliqua."}
+
+\NormalTok{str }\CommentTok{\# print the value of str}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua."
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(str) }\CommentTok{\# To set the line brakes at the same position as the code}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Lorem ipsum dolor sit amet,
+## consectetur adipiscing elit,
+## sed do eiusmod tempor incididunt
+## ut labore et dolore magna aliqua.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nchar}\NormalTok{(str) }\CommentTok{\# To get the length of a string}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 123
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# For finding characters and sequences}
+\NormalTok{str }\OtherTok{\textless{}{-}} \StringTok{"Hello World!"}
+
+\FunctionTok{grepl}\NormalTok{(}\StringTok{"H"}\NormalTok{, str)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grepl}\NormalTok{(}\StringTok{"Hello"}\NormalTok{, str)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grepl}\NormalTok{(}\StringTok{"X"}\NormalTok{, str)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+Escape Symbols:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbackslash{} Backslash
+\item
+  \textbackslash{} New Line
+\item
+  \r   Carriage Return
+\item
+  \t   Tab
+\item
+  \b   Backspace
+\end{enumerate}
+
+\hypertarget{r-operators-1}{%
+\paragraph{R Operators:}\label{r-operators-1}}
+
+Arithmetic Operators:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \begin{itemize}
+  \tightlist
+  \item
+    Addition
+  \end{itemize}
+\item
+  \begin{itemize}
+  \tightlist
+  \item
+    Subtraction
+  \end{itemize}
+\item
+  \begin{itemize}
+  \tightlist
+  \item
+    Multiplication\\
+  \end{itemize}
+\item
+  / Division\\
+\item
+  \^{} Exponent\\
+\item
+  \%\% Modulus (Remainder from division)\\
+\item
+  \%/\% Integer Division
+\end{enumerate}
+
+Assignment Operators:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_function }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+  \FunctionTok{print}\NormalTok{(}\StringTok{"Hello World!"}\NormalTok{)}
+\NormalTok{\}}
+
+\FunctionTok{my\_function}\NormalTok{() }\CommentTok{\# call the function named my\_function}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hello World!"
+\end{verbatim}
+
+\hypertarget{r-data-structures}{%
+\subsubsection{R Data Structures:}\label{r-data-structures}}
+
+\hypertarget{r-vectors}{%
+\paragraph{R Vectors:}\label{r-vectors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Vector of strings}
+\NormalTok{fruits }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"banana"}\NormalTok{, }\StringTok{"apple"}\NormalTok{, }\StringTok{"orange"}\NormalTok{)}
+
+\CommentTok{\# Print fruits}
+\NormalTok{fruits}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "banana" "apple"  "orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Vector of numerical values}
+\NormalTok{numbers }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+
+\CommentTok{\# Print numbers}
+\NormalTok{numbers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Vector with numerical values in a sequence}
+\NormalTok{numbers }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}
+
+\NormalTok{numbers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Length of vectors:}
+\NormalTok{fruits }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"banana"}\NormalTok{, }\StringTok{"apple"}\NormalTok{, }\StringTok{"orange"}\NormalTok{)}
+
+\FunctionTok{length}\NormalTok{(fruits)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Sort a vector:}
+\NormalTok{fruits }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"banana"}\NormalTok{, }\StringTok{"apple"}\NormalTok{, }\StringTok{"orange"}\NormalTok{, }\StringTok{"mango"}\NormalTok{, }\StringTok{"lemon"}\NormalTok{)}
+\NormalTok{numbers }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{13}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+
+\FunctionTok{sort}\NormalTok{(fruits)  }\CommentTok{\# Sort a string}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "apple"  "banana" "lemon"  "mango"  "orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sort}\NormalTok{(numbers) }\CommentTok{\# Sort numbers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2  3  5  7 13 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Accessing vectors:}
+\NormalTok{fruits[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "banana"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change "banana" to "pear"}
+\NormalTok{fruits[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"pear"}
+
+\CommentTok{\# Print fruits}
+\NormalTok{fruits}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "pear"   "apple"  "orange" "mango"  "lemon"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Repeat vectors:}
+\NormalTok{repeat\_each }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{each =} \DecValTok{3}\NormalTok{)}
+
+\NormalTok{repeat\_each}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 1 1 2 2 2 3 3 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =} \DecValTok{100}\NormalTok{, }\AttributeTok{by =} \DecValTok{20}\NormalTok{)}
+
+\NormalTok{numbers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]   0  20  40  60  80 100
+\end{verbatim}
+
+\hypertarget{r-lists}{%
+\paragraph{R Lists:}\label{r-lists}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# List of strings}
+\NormalTok{thislist }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{)}
+
+\CommentTok{\# Print the list}
+\NormalTok{thislist}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "apple"
+## 
+## [[2]]
+## [1] "banana"
+## 
+## [[3]]
+## [1] "cherry"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Access the list}
+\NormalTok{thislist[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "apple"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change item in list}
+\NormalTok{thislist }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{)}
+\NormalTok{thislist[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"blackcurrant"}
+
+\CommentTok{\# Length of a list}
+\FunctionTok{length}\NormalTok{(thislist)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check if item exists}
+\StringTok{"apple"} \SpecialCharTok{\%in\%}\NormalTok{ thislist}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add item to list}
+\FunctionTok{append}\NormalTok{(thislist, }\StringTok{"orange"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "blackcurrant"
+## 
+## [[2]]
+## [1] "banana"
+## 
+## [[3]]
+## [1] "cherry"
+## 
+## [[4]]
+## [1] "orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Remove item from list}
+\NormalTok{newlist }\OtherTok{\textless{}{-}}\NormalTok{ thislist[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+
+\CommentTok{\# Range of indexes}
+\NormalTok{(thislist)[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "banana"
+## 
+## [[2]]
+## [1] "cherry"
+## 
+## [[3]]
+## NULL
+## 
+## [[4]]
+## NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Loop through list}
+\ControlFlowTok{for}\NormalTok{ (x }\ControlFlowTok{in}\NormalTok{ thislist) \{}
+  \FunctionTok{print}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "blackcurrant"
+## [1] "banana"
+## [1] "cherry"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Join two lists}
+\NormalTok{list1 }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{)}
+\NormalTok{list2 }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\NormalTok{list3 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(list1,list2)}
+
+\NormalTok{list3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "a"
+## 
+## [[2]]
+## [1] "b"
+## 
+## [[3]]
+## [1] "c"
+## 
+## [[4]]
+## [1] 1
+## 
+## [[5]]
+## [1] 2
+## 
+## [[6]]
+## [1] 3
+\end{verbatim}
+
+\hypertarget{r-matrices}{%
+\paragraph{R Matrices:}\label{r-matrices}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a matrix}
+\NormalTok{thismatrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{3}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+
+\CommentTok{\# Print the matrix}
+\NormalTok{thismatrix}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    1    4
+## [2,]    2    5
+## [3,]    3    6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Access matrix items}
+\NormalTok{thismatrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{, }\StringTok{"orange"}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+
+\NormalTok{thismatrix[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "cherry"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Access more than one row}
+\NormalTok{thismatrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{, }\StringTok{"orange"}\NormalTok{,}\StringTok{"grape"}\NormalTok{, }\StringTok{"pineapple"}\NormalTok{, }\StringTok{"pear"}\NormalTok{, }\StringTok{"melon"}\NormalTok{, }\StringTok{"fig"}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{3}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+
+\NormalTok{thismatrix[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]     [,2]     [,3]   
+## [1,] "apple"  "orange" "pear" 
+## [2,] "banana" "grape"  "melon"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Access more than one column}
+\NormalTok{thismatrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{, }\StringTok{"orange"}\NormalTok{,}\StringTok{"grape"}\NormalTok{, }\StringTok{"pineapple"}\NormalTok{, }\StringTok{"pear"}\NormalTok{, }\StringTok{"melon"}\NormalTok{, }\StringTok{"fig"}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{3}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+
+\NormalTok{thismatrix[, }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]     [,2]       
+## [1,] "apple"  "orange"   
+## [2,] "banana" "grape"    
+## [3,] "cherry" "pineapple"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add rows and columns}
+\NormalTok{newmatrix }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(thismatrix, }\FunctionTok{c}\NormalTok{(}\StringTok{"strawberry"}\NormalTok{, }\StringTok{"blueberry"}\NormalTok{, }\StringTok{"raspberry"}\NormalTok{))}
+
+\CommentTok{\# Print the new matrix}
+\NormalTok{newmatrix}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]     [,2]        [,3]    [,4]        
+## [1,] "apple"  "orange"    "pear"  "strawberry"
+## [2,] "banana" "grape"     "melon" "blueberry" 
+## [3,] "cherry" "pineapple" "fig"   "raspberry"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Remove the first row and the first column}
+\NormalTok{thismatrix }\OtherTok{\textless{}{-}}\NormalTok{ thismatrix[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{), }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{)]}
+
+\NormalTok{thismatrix}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]        [,2]   
+## [1,] "grape"     "melon"
+## [2,] "pineapple" "fig"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check if items exist}
+\NormalTok{thismatrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{, }\StringTok{"orange"}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+
+\StringTok{"apple"} \SpecialCharTok{\%in\%}\NormalTok{ thismatrix}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Matrix Length}
+\FunctionTok{length}\NormalTok{(thismatrix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Loop trough list}
+\ControlFlowTok{for}\NormalTok{ (rows }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(thismatrix)) \{}
+  \ControlFlowTok{for}\NormalTok{ (columns }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(thismatrix)) \{}
+    \FunctionTok{print}\NormalTok{(thismatrix[rows, columns])}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "apple"
+## [1] "cherry"
+## [1] "banana"
+## [1] "orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Combine two matrices}
+\CommentTok{\# Combine matrices}
+\NormalTok{Matrix1 }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{, }\StringTok{"grape"}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\NormalTok{Matrix2 }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"mango"}\NormalTok{, }\StringTok{"pineapple"}\NormalTok{, }\StringTok{"watermelon"}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+
+\CommentTok{\# Adding it as a rows}
+\NormalTok{Matrix\_Combined }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(Matrix1, Matrix2)}
+\NormalTok{Matrix\_Combined}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]     [,2]        
+## [1,] "apple"  "cherry"    
+## [2,] "banana" "grape"     
+## [3,] "orange" "pineapple" 
+## [4,] "mango"  "watermelon"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Adding it as a columns}
+\NormalTok{Matrix\_Combined }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(Matrix1, Matrix2)}
+\NormalTok{Matrix\_Combined}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]     [,2]     [,3]     [,4]        
+## [1,] "apple"  "cherry" "orange" "pineapple" 
+## [2,] "banana" "grape"  "mango"  "watermelon"
+\end{verbatim}
+
+\hypertarget{r-arrays}{%
+\paragraph{R Arrays:}\label{r-arrays}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Vector of strings}
+\NormalTok{fruits }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"banana"}\NormalTok{, }\StringTok{"apple"}\NormalTok{, }\StringTok{"orange"}\NormalTok{)}
+
+\CommentTok{\# Print fruits}
+\NormalTok{fruits}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "banana" "apple"  "orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Vector of numerical values}
+\NormalTok{numbers }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+
+\CommentTok{\# Print numbers}
+\NormalTok{numbers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Vector with numerical values in a sequence}
+\NormalTok{numbers }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}
+
+\NormalTok{numbers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Length of vectors:}
+\NormalTok{fruits }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"banana"}\NormalTok{, }\StringTok{"apple"}\NormalTok{, }\StringTok{"orange"}\NormalTok{)}
+
+\FunctionTok{length}\NormalTok{(fruits)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Sort a vector:}
+\NormalTok{fruits }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"banana"}\NormalTok{, }\StringTok{"apple"}\NormalTok{, }\StringTok{"orange"}\NormalTok{, }\StringTok{"mango"}\NormalTok{, }\StringTok{"lemon"}\NormalTok{)}
+\NormalTok{numbers }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{13}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+
+\FunctionTok{sort}\NormalTok{(fruits)  }\CommentTok{\# Sort a string}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "apple"  "banana" "lemon"  "mango"  "orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sort}\NormalTok{(numbers) }\CommentTok{\# Sort numbers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2  3  5  7 13 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Accessing vectors:}
+\NormalTok{fruits[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "banana"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change "banana" to "pear"}
+\NormalTok{fruits[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"pear"}
+
+\CommentTok{\# Print fruits}
+\NormalTok{fruits}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "pear"   "apple"  "orange" "mango"  "lemon"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Repeat vectors:}
+\NormalTok{repeat\_each }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{each =} \DecValTok{3}\NormalTok{)}
+
+\NormalTok{repeat\_each}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 1 1 2 2 2 3 3 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =} \DecValTok{100}\NormalTok{, }\AttributeTok{by =} \DecValTok{20}\NormalTok{)}
+
+\NormalTok{numbers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]   0  20  40  60  80 100
+\end{verbatim}
+
+\hypertarget{r-lists-1}{%
+\paragraph{R Lists:}\label{r-lists-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# List of strings}
+\NormalTok{thislist }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{)}
+
+\CommentTok{\# Print the list}
+\NormalTok{thislist}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "apple"
+## 
+## [[2]]
+## [1] "banana"
+## 
+## [[3]]
+## [1] "cherry"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Access the list}
+\NormalTok{thislist[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "apple"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change item in list}
+\NormalTok{thislist }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{)}
+\NormalTok{thislist[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"blackcurrant"}
+
+\CommentTok{\# Length of a list}
+\FunctionTok{length}\NormalTok{(thislist)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check if item exists}
+\StringTok{"apple"} \SpecialCharTok{\%in\%}\NormalTok{ thislist}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add item to list}
+\FunctionTok{append}\NormalTok{(thislist, }\StringTok{"orange"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "blackcurrant"
+## 
+## [[2]]
+## [1] "banana"
+## 
+## [[3]]
+## [1] "cherry"
+## 
+## [[4]]
+## [1] "orange"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Remove item from list}
+\NormalTok{newlist }\OtherTok{\textless{}{-}}\NormalTok{ thislist[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+
+\CommentTok{\# Range of indexes}
+\NormalTok{(thislist)[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "banana"
+## 
+## [[2]]
+## [1] "cherry"
+## 
+## [[3]]
+## NULL
+## 
+## [[4]]
+## NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Loop through list}
+\ControlFlowTok{for}\NormalTok{ (x }\ControlFlowTok{in}\NormalTok{ thislist) \{}
+  \FunctionTok{print}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "blackcurrant"
+## [1] "banana"
+## [1] "cherry"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Join two lists}
+\NormalTok{list1 }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{)}
+\NormalTok{list2 }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\NormalTok{list3 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(list1,list2)}
+
+\NormalTok{list3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "a"
+## 
+## [[2]]
+## [1] "b"
+## 
+## [[3]]
+## [1] "c"
+## 
+## [[4]]
+## [1] 1
+## 
+## [[5]]
+## [1] 2
+## 
+## [[6]]
+## [1] 3
+\end{verbatim}
+
+\hypertarget{r-matrices-1}{%
+\paragraph{R Matrices:}\label{r-matrices-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# An array with one dimension with values ranging from 1 to 24}
+\NormalTok{thisarray }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{24}\NormalTok{)}
+\NormalTok{thisarray}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# An array with more than one dimension}
+\NormalTok{multiarray }\OtherTok{\textless{}{-}} \FunctionTok{array}\NormalTok{(thisarray, }\AttributeTok{dim =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\NormalTok{multiarray}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , 1
+## 
+##      [,1] [,2] [,3]
+## [1,]    1    5    9
+## [2,]    2    6   10
+## [3,]    3    7   11
+## [4,]    4    8   12
+## 
+## , , 2
+## 
+##      [,1] [,2] [,3]
+## [1,]   13   17   21
+## [2,]   14   18   22
+## [3,]   15   19   23
+## [4,]   16   20   24
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Access Array}
+\NormalTok{multiarray[}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 22
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check if item exists}
+\DecValTok{2} \SpecialCharTok{\%in\%}\NormalTok{ multiarray}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Amount of rows}
+\FunctionTok{dim}\NormalTok{(multiarray)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 3 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Array Length}
+\FunctionTok{length}\NormalTok{(multiarray)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 24
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Loop trough array}
+\ControlFlowTok{for}\NormalTok{(x }\ControlFlowTok{in}\NormalTok{ multiarray)\{}
+  \FunctionTok{print}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 7
+## [1] 8
+## [1] 9
+## [1] 10
+## [1] 11
+## [1] 12
+## [1] 13
+## [1] 14
+## [1] 15
+## [1] 16
+## [1] 17
+## [1] 18
+## [1] 19
+## [1] 20
+## [1] 21
+## [1] 22
+## [1] 23
+## [1] 24
+\end{verbatim}
+
+\hypertarget{r-data-frames}{%
+\paragraph{R Data Frames:}\label{r-data-frames}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a data frame}
+\NormalTok{Data\_Frame }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{ (}
+  \AttributeTok{Training =} \FunctionTok{c}\NormalTok{(}\StringTok{"Strength"}\NormalTok{, }\StringTok{"Stamina"}\NormalTok{, }\StringTok{"Other"}\NormalTok{),}
+  \AttributeTok{Pulse =} \FunctionTok{c}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{120}\NormalTok{),}
+  \AttributeTok{Duration =} \FunctionTok{c}\NormalTok{(}\DecValTok{60}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{45}\NormalTok{)}
+\NormalTok{)}
+
+\CommentTok{\# Print the data frame}
+\NormalTok{Data\_Frame}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Training Pulse Duration
+## 1 Strength   100       60
+## 2  Stamina   150       30
+## 3    Other   120       45
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summarize Data}
+\FunctionTok{summary}\NormalTok{(Data\_Frame)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Training             Pulse          Duration   
+##  Length:3           Min.   :100.0   Min.   :30.0  
+##  Class :character   1st Qu.:110.0   1st Qu.:37.5  
+##  Mode  :character   Median :120.0   Median :45.0  
+##                     Mean   :123.3   Mean   :45.0  
+##                     3rd Qu.:135.0   3rd Qu.:52.5  
+##                     Max.   :150.0   Max.   :60.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Access items}
+\NormalTok{Data\_Frame[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Training
+## 1 Strength
+## 2  Stamina
+## 3    Other
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Data\_Frame[[}\StringTok{"Training"}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Strength" "Stamina"  "Other"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Data\_Frame}\SpecialCharTok{$}\NormalTok{Training}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Strength" "Stamina"  "Other"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add a new row}
+\NormalTok{New\_row\_DF }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(Data\_Frame, }\FunctionTok{c}\NormalTok{(}\StringTok{"Strength"}\NormalTok{, }\DecValTok{110}\NormalTok{, }\DecValTok{110}\NormalTok{))}
+
+\CommentTok{\# Add a new column}
+\NormalTok{New\_col\_DF }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(Data\_Frame, }\AttributeTok{Steps =} \FunctionTok{c}\NormalTok{(}\DecValTok{1000}\NormalTok{, }\DecValTok{6000}\NormalTok{, }\DecValTok{2000}\NormalTok{))}
+
+\CommentTok{\# Remove the first row and column}
+\NormalTok{Data\_Frame\_New }\OtherTok{\textless{}{-}}\NormalTok{ Data\_Frame[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{), }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{)]}
+
+\CommentTok{\# Data Frame length}
+\FunctionTok{length}\NormalTok{(Data\_Frame)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Combining Data Frames}
+\NormalTok{Data\_Frame1 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{ (}
+  \AttributeTok{Training =} \FunctionTok{c}\NormalTok{(}\StringTok{"Strength"}\NormalTok{, }\StringTok{"Stamina"}\NormalTok{, }\StringTok{"Other"}\NormalTok{),}
+  \AttributeTok{Pulse =} \FunctionTok{c}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{120}\NormalTok{),}
+  \AttributeTok{Duration =} \FunctionTok{c}\NormalTok{(}\DecValTok{60}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{45}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{Data\_Frame2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{ (}
+  \AttributeTok{Training =} \FunctionTok{c}\NormalTok{(}\StringTok{"Stamina"}\NormalTok{, }\StringTok{"Stamina"}\NormalTok{, }\StringTok{"Strength"}\NormalTok{),}
+  \AttributeTok{Pulse =} \FunctionTok{c}\NormalTok{(}\DecValTok{140}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{160}\NormalTok{),}
+  \AttributeTok{Duration =} \FunctionTok{c}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{20}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{New\_Data\_Frame }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(Data\_Frame1, Data\_Frame2)}
+\NormalTok{New\_Data\_Frame}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Training Pulse Duration
+## 1 Strength   100       60
+## 2  Stamina   150       30
+## 3    Other   120       45
+## 4  Stamina   140       30
+## 5  Stamina   150       30
+## 6 Strength   160       20
+\end{verbatim}
+
+\hypertarget{r-factors}{%
+\paragraph{R Factors:}\label{r-factors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a factor}
+\NormalTok{music\_genre }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Jazz"}\NormalTok{, }\StringTok{"Rock"}\NormalTok{, }\StringTok{"Classic"}\NormalTok{, }\StringTok{"Classic"}\NormalTok{, }\StringTok{"Pop"}\NormalTok{, }\StringTok{"Jazz"}\NormalTok{, }\StringTok{"Rock"}\NormalTok{, }\StringTok{"Jazz"}\NormalTok{))}
+
+\CommentTok{\# Print the factor}
+\NormalTok{music\_genre}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] Jazz    Rock    Classic Classic Pop     Jazz    Rock    Jazz   
+## Levels: Classic Jazz Pop Rock
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Factor length}
+\FunctionTok{length}\NormalTok{(music\_genre)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Access Factors}
+\NormalTok{music\_genre[}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] Classic
+## Levels: Classic Jazz Pop Rock
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Chage item value}
+\NormalTok{music\_genre[}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Pop"}
+\end{Highlighting}
+\end{Shaded}
+
+Note that the \texttt{echo\ =\ FALSE} parameter was added to the code
+chunk to prevent printing of the R code that generated the plot.
+
+\end{document}

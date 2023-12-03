@@ -1,0 +1,186 @@
+---
+title: "DS_M1"
+author: "Julian Neuwirth und Leo Stransky"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data Science ``Explorative Datenanalyse und Visualisierung'' - Taskdescription
+
+Hier werden Daten von R-Importiert und zu folgenden Punkten analysiert:
+
+
+Lade den Datensatz 'state.x77' in R. Beschreibe die Daten anhand der internen Hilfe.
+
+Ermittle mithilfe geeigneter Schätzer für die Lage (arithmetischer Mittelwert und Median sollen verglichen werden) und Streuung (Standardabweichung und Interquartilsdistanz sollen verglichen werden) der ersten 5 Variablen: Population, Income, Illiteracy, Life Exp(ectancy) und Murder.
+
+Stelle die Daten der ersten 5 Variablen, Population, Income, Illiteracy, Life Exp(ectancy) und Murder in geeigneter Weise graphisch dar, indem du Boxplot, Histogramm mit Dichteschätzung, ECDF und QQ-Plot verwendest.
+
+Begründe anhand der graphischen Darstellung, ob es sich symmetrische oder schiefe Datenverteilungen handelt. Begründe anhand der graphischen Darstellungen, ob schwere oder leichte Ränder vorliegen (und auf welcher Seite).
+
+Bestimme anhand graphischen Darstellungen aus Punkt 3. und der Erkenntnisse aus 4., ob Ausreißer vorliegen und welche Punkte dies sind.
+
+## Es gibt folgende Daten hier:
+
+Population:
+population estimate as of July 1, 1975
+
+Income:
+per capita income (1974)
+
+Illiteracy:
+illiteracy (1970, percent of population)
+
+Life Exp:
+life expectancy in years (1969–71)
+
+Murder:
+murder and non-negligent manslaughter rate per 100,000 population (1976)
+
+```{r , echo=TRUE}
+# So bekommt man die Daten
+daten <- state.x77
+#daten
+population <- daten[,1]
+income <- daten[,2]
+illiteracy <- daten[,3]
+life_exp <- daten[,4]
+murder <- daten[,5]
+
+```
+
+hier habe ich mal einfach alles herunter geladen
+
+```{r , echo=TRUE}
+#Die Operator für die Population
+library(dplyr)
+schaetzer <- tibble(
+  Name = c("Population", "Income", "Illiteracy", "Life_Exp", "Murder"),
+  Mittelwert = c(mean(population), mean(income), mean(illiteracy), mean(life_exp), mean(murder)),
+  Median = c(median(population), median(income), median(illiteracy), median(life_exp), median(murder)),
+  Standardabweichung = c(sd(population), sd(income), sd(illiteracy), sd(life_exp), sd(murder)),
+  Interquartilsdistanz = c(IQR(population), IQR(income), IQR(illiteracy), IQR(life_exp), IQR(murder))
+)
+
+schaetzer
+```
+Es gibt ausreißer, weil es in manchen Bundesstaaten ausreißern gibt.
+
+```{r , echo=TRUE}
+#Die Operator für die income
+income
+mean(income)
+median(income)
+sd(income)
+IQR(income)
+
+```
+
+```{r , echo=TRUE}
+#Die Operator für die illiteracy
+illiteracy
+mean(illiteracy)
+median(illiteracy)
+sd(illiteracy)
+IQR(illiteracy)
+
+```
+
+
+```{r , echo=TRUE}
+#Die Operator für die life_exp
+life_exp
+mean(life_exp)
+median(life_exp)
+sd(life_exp)
+IQR(life_exp)
+
+```
+
+
+```{r , echo=TRUE}
+#Die Operator für die murder
+murder
+mean(murder)
+median(murder)
+sd(murder)
+IQR(murder)
+
+```
+
+
+# Jetzt werden die Daten grafisch dargestellt:
+
+
+```{r , echo=TRUE,fig.height=7,fig.width=7}
+#Die Operator für die Population
+
+par(mfrow=c(2,2))
+boxplot(population)
+hist(population, prob=TRUE, main="Historgamm")
+plot(ecdf(population), main="EDCF", col="blue")
+qqnorm(population);qqline(population)
+```
+
+Analyse: Hier gibt es einen Rechten schären Rand; die verteilung ist unsymmetrisch
+
+
+```{r , echo=TRUE,fig.height=7,fig.width=7}
+#Die Operator für die income
+
+par(mfrow=c(2,2))
+boxplot(income)
+hist(income, prob=TRUE, main="Historgamm")
+plot(ecdf(income), main="EDCF", col="blue")
+qqnorm(income);qqline(income)
+```
+
+Analyse: Es ist fast symmetrisch; auf der rechten seiter gibt es einen Ausreißer
+
+```{r , echo=TRUE,fig.height=7,fig.width=7}
+#Die Operator für die illiteracy
+
+par(mfrow=c(2,2))
+boxplot(illiteracy)
+hist(illiteracy, prob=TRUE, main="Historgamm")
+plot(ecdf(illiteracy), main="EDCF", col="blue")
+qqnorm(illiteracy);qqline(illiteracy)
+```
+
+Analyse: Hier gibt es einen Rechten schären Rand; die verteilung ist unsymmetrisch
+
+```{r , echo=TRUE,fig.height=7,fig.width=7}
+#Die Operator für die life_exp
+
+par(mfrow=c(2,2))
+boxplot(life_exp)
+hist(life_exp, prob=TRUE, main="Historgamm")
+plot(ecdf(life_exp), main="EDCF", col="blue")
+qqnorm(life_exp);qqline(life_exp)
+```
+
+Analyse: Es ist fast symmetrisch; auf der rechten seiter gibt es einen Ausreißer
+
+```{r , echo=TRUE,fig.height=7,fig.width=7}
+#Die Operator für die murder
+
+par(mfrow=c(2,2))
+boxplot(murder)
+hist(murder, prob=TRUE, main="Historgamm")
+plot(ecdf(murder), main="EDCF", col="blue")
+qqnorm(murder);qqline(murder)
+```
+
+Analyse: die Werte sind gut verteilt
+
+Jetzt sind wir fertig mit der Darstellung der Daten.
+
+
+## Gibt es Ausreiße?
+
+
+

@@ -1,0 +1,846 @@
+---
+title: "DSAI_M1"
+author: "Leonhard Stransky"
+date: "2023-09-19"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+``` 
+
+# Data Science ``Einführung in relevante Softwareumgebungen'' 
+
+## Einführung:
+
+Die Theorieeinheiten sollen als Hintergrundinformation zur Durchführung einer eigenen Analyse dienen. Zum Umgang mit R und RStudio oder Python ist der Link aus den Theorie Einheiten empfohlen. Als Vorlage für die Laborprotokolle steht euch im Kurs ein Template für R Markdown zur Verfügung.
+
+## Ziele:
+
+Das Ziel ist es, [DataCamp](https://learn.datacamp.com/) als Anleitung und R als Werkzeug zur Datenexploration und Visualisierung selbständig einsetzen und erste Ergebnisse interpretieren zu können.
+
+## Aufgabe 1(GK):
+
+Erarbeite dir durch den Kurs [Einführung in R](https://methodenlehre.github.io/einfuehrung-in-R/) in den Kapiteln 2 bis 4 die Grundlagen der Sprache Programmiersprache R und vertiefe dich dann in Visualisierung mit der Library 'ggplot' in Kapitel 5. Fasse zusätzlich die Inhalte von [w3schools](https://www.w3schools.com/r/) der Kapitel "Tutorial" und "Data Structures" (GK)
+
+Führe dabei ein Protokoll in einem Markdown File über Informationen, Dokumentation und Codes als Nachschlagemöglichkeit, da dir der Kurs nur für 6 Monate zur Verfügung stehen wird.
+
+\pagebreak
+
+## 2. Die R Sprache:
+
+### Übung1:
+
+```{r, echo=TRUE}
+
+1/3 * ((1+3+5+7+2)/(3+5+4))
+
+exp(1)
+
+sqrt(2)
+
+8^(1/3)
+
+log2(8)
+
+```
+
+### Übung2:
+
+1. Erzeugen Sie eine Sequenz von 0 bis 100 in 5-er Schritten.
+2. Berechnen Sie den Mittelwert des Vektors [1, 3, 4, 7, 11, 2].
+3. Lassen Sie sich die Spannweite x(max)-x(min)
+  dieses Vektors ausgeben.
+4. Berechnen Sie die Summe dieses Vektors.
+5. Zentrieren Sie diesen Vektor.
+6. Simulieren Sie einen Münzwurf mit der Funktion sample(). Tipp: nehmen Sie für Kopf 1 und für Zahl 0. Simulieren Sie 100 Münzwürfe.
+7. Simulieren Sie eine Trick-Münze mit P!=0.5
+8. Generieren Sie einen Vektor, der aus 100 Wiederholungen der Zahl 3 besteht.
+
+```{r, echo=TRUE} 
+
+seq(from = 0, to = 100, by = 5)
+
+mean(c(1,3,4,7,11,2))
+
+b <- range(c(1,3,4,7,11,2))
+b[2] - b[1]
+
+sum(c(1,3,4,7,11,2))
+
+scale(c(1,3,4,7,11,2), center = TRUE, scale = FALSE)
+
+sample(c(0,1), size = 100, replace = TRUE)
+
+sample(c(0,1,1,1,1), size = 100, replace = TRUE)
+
+rep(3, times = 100)
+
+```
+
+### Übung3:
+
+Wiederholen Sie einige der Beispiele von oben, aber speichern Sie diesmal die Resultate in neuen Variablen ab. Sie können die Variablen dann für weitere Operationen wieder verwenden.
+
+```{r, echo=FALSE}
+vektor <- c(1, 3, 4, 7, 11, 2)
+summe <- sum(vektor)
+
+mittelwert <- mean(vektor)
+mittelwert
+```
+```{r, echo=FALSE}
+gerundeter_mittelwert <- round(mittelwert, digits = 1)
+gerundeter_mittelwert
+```
+
+### Übung4:
+
+Tippen Sie in der Konsole scale( und drücken Sie TAB. Sie sehen, dass diese Funktion drei Argumente hat, x, center und scale. Schreiben Sie scale(vektor, scale = gefolgt von TAB. Sie sehen, dass scale = TRUE den default Wert TRUE hat.
+
+Was sind die Argumente der Funktion round()? Hat eines der Argumente einen default Wert?
+
+Schauen Sie im Help Viewer nach, was die Funktion rnorm() macht. Was sind die Argumente. Was bedeuten die default Werte?
+
+  Schauen Sie im Help Viewer nach, welche Argumente die seq() Funktion hat.
+
+Was machen folgende Funktionsaufrufe?
+
+```{r, echo=FALSE}
+
+seq() # Ergebnis: 1
+seq(1, 10)  # Ergebnis: 1-10
+seq(1, 10, 2) # 1-10 in 2er Sprüngen
+# seq(1, 10, 2, 20) # Zu viele Argumente Funktioniert nicht
+seq(1, 10, length.out = 20)   
+
+```
+
+round:
+
+Bsp:
+round(x, digits = 1)
+
+x ist die Zahl oder der Vektor
+
+digits ist die Anzahl der Dezimalstellen auf die gerundet werden soll 
+
+Die Verwendung von Digits ist optional und hat einen default wert von 0.
+
+rnorm:
+Dies wird verwendet um Zufallszahlen aus einer Normalverteilung zu generieren.
+
+Bsp:
+rnorm(n, mean = 0, sd = 1)
+
+
+n ist die Anzahl der Zufallszahlen. (erfordert)
+
+mean ist der Durchschnitt (Mittelwert) der Normalverteilung. 
+
+sd ist die Standardabweichung der Normalverteilung.
+
+mean und sd sind optionale Argumente.
+mean hat als default wert 0 sund sd 1 (Dies enstpspricht einer Standardnormalverteilung)
+
+seq:
+Dies wird verwendet um reguläre Sequenzen von Zahlen zu generieren.
+
+
+Bsp:
+seq()´
+
+seq(from, to, by, length.out, along.with, ...)
+
+from ist der Startwert der Sequenz. (optional) (default wert: 1)
+
+to: Der Endwert der Sequenz. (optional) (default wert: 1)
+
+by: Der Inkrementwert, um den die Sequenz erhöht wird. (optional) default wert wird automatisch berechnet, um die gewünschte Länge der Sequenz length.out zu erreichen.
+
+length.out: Die gewünschte Länge der Sequenz. (optional) default wert ist NULL. Wenn length.out nicht angegeben wird, wird die Länge der Sequenz basierend auf den anderen Argumenten berechnet.
+
+along.with: Übernimmt die Länge der Sequenz von einem anderen Vektor oder einer anderen Sequenz. (optional)
+
+### Character Vektors
+
+```{r , echo=TRUE}
+letters[1:3]
+text <- c("these are", "some strings")
+text
+length(text)
+vorname <- "Ronald Aylmer"
+nachname <- "Fisher"
+paste("Mein Name ist:", vorname, nachname, sep = " ")
+```
+### Logical vectors
+
+Logische Vektoren werden vor allem dazu benutzt, um numerische Vektoren zu indizieren, z.B. um alle positiven Elemente eines Vektors auszuwählen.
+
+```{r , echo=TRUE}
+
+x <- rnorm(24)
+x
+x > 0
+mean(x)
+```
+man kann auch bei dieses Vektors den Mittelwert bestimmen
+
+### Factors
+
+```{r , echo=TRUE}
+geschlecht <- c("male", "female", "male", "male", "female")
+geschlecht
+typeof(geschlecht)
+geschlecht <- factor(geschlecht, levels = c("female", "male"))
+geschlecht
+typeof(geschlecht)
+
+```
+Hier kann man sehen das durch das Anwenden der methode Faktor man verschhiedene level bestimmen kann --> so werden die Werte zu Integern und geschlecht zu der Klasse Faktor
+Mit factor() kann man die Reihenfolge genau bestimmen - es müssen aber alle Stufen explizit angegeben werden.
+
+### Lists
+
+
+
+```{r , echo=TRUE}
+x <- list(1:3, "a", c(TRUE, FALSE, TRUE), c(2.3, 5.9))
+x
+x[2]
+b <- list(int = 1:3,
+          string = "a",
+          log = c(TRUE, FALSE, TRUE),
+          double = c(2.3, 5.9))
+b
+
+```
+
+### Data Frames
+
+Nun kommen wir zu dem für uns wichtigsten Objekt in R, dem Data Frame. Datensätze werden in R durch Data Frames repräsentiert. Ein Data Frame besteht aus Zeilen (rows) und Spalten (columns). Technisch gesehen ist ein Data Frame eine Liste, deren Elemente gleichlange (equal-length) Vektoren sind. 
+
+```{r , echo=TRUE}
+library(dplyr)
+df <- tibble(geschlecht = factor(c("male", "female",
+                                   "male", "male",
+                                   "female")),
+             alter = c(22, 45, 33, 27, 30))
+df
+attributes(df)
+```
+
+## W3schools:
+
+### R Tutorial:
+
+#### R Comments:
+
+```{r , echo=TRUE}
+# This is a comment
+"Hello World!"
+```
+
+#### R Variables:
+
+```{r , echo=TRUE}
+name <- "John"
+age <- 40
+
+name   # output "John"
+age    # output 40
+
+# Concatenate Elements:
+text <- "awesome"
+
+paste("R is", text)
+
+# Multiple Variables:
+
+# Assign the same value to multiple variables in one line:
+var1 <- var2 <- var3 <- "Orange"
+
+# Print variable values:
+var1
+var2
+var3
+
+# Variabel Names:
+
+# Legal variable names:
+myvar <- "John"
+my_var <- "John"
+myVar <- "John"
+MYVAR <- "John"
+myvar2 <- "John"
+.myvar <- "John"
+
+# Illegal variable names:
+# 2myvar <- "John"
+# my-var <- "John"
+# my var <- "John"
+# _my_var <- "John"
+# my_v@ar <- "John"
+# TRUE <- "John"
+
+```
+
+#### R Data Types:
+
+1. numeric - (10.5, 55, 787)
+2. integer - (1L, 55L, 100L, where the letter "L" declares this as an integer)
+3. complex - (9 + 3i, where "i" is the imaginary part)
+4. character (a.k.a. string) - ("k", "R is exciting", "FALSE", "11.5")
+5. logical (a.k.a. boolean) - (TRUE or FALSE)
+
+```{r , echo=TRUE}
+# numeric
+x <- 10.5
+class(x)
+
+# integer
+x <- 1000L
+class(x)
+
+# complex
+x <- 9i + 3
+class(x)
+
+# character/string
+x <- "R is exciting"
+class(x)
+
+# logical/boolean
+x <- TRUE
+class(x)
+```
+
+#### R Numbers:
+
+```{r , echo=TRUE}
+# R Numbers:
+x <- 10.5   # numeric
+y <- 10L    # integer
+z <- 1i     # complex
+
+# Type Conversion:
+as.numeric()
+as.integer()
+as.complex()
+```
+
+#### R Math:
+
+```{r , echo=TRUE}
+max(5, 10, 15)
+
+min(5, 10, 15)
+
+sqrt(16)
+
+abs(-4.7) # Returns positive Value
+
+ceiling(1.4) # Rounds the number up
+
+floor(1.4) # Rounds the number down
+```
+
+#### R Strings:
+
+```{r , echo=TRUE}
+str <- "Hello"
+str # print the value of str
+
+# For multiple lines use ,
+str <- "Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+sed do eiusmod tempor incididunt
+ut labore et dolore magna aliqua."
+
+str # print the value of str
+
+cat(str) # To set the line brakes at the same position as the code
+
+nchar(str) # To get the length of a string
+
+# For finding characters and sequences
+str <- "Hello World!"
+
+grepl("H", str)
+grepl("Hello", str)
+grepl("X", str)
+```
+
+Escape Symbols:
+
+1. \\	Backslash
+2. \\	New Line
+3. \r	Carriage Return
+4. \t	Tab
+5. \b	Backspace
+
+#### R Operators:
+
+Arithmetic Operators:
+
+1. +	Addition
+2. -	Subtraction	
+3. *	Multiplication	
+4. /	Division	
+5. `^`	Exponent		
+6. %%	Modulus (Remainder from division)	
+7. %/%	Integer Division
+
+Assignment Operators:
+
+```{r , echo=TRUE}
+my_var <- 3
+
+my_var <<- 3
+
+3 -> my_var
+
+3 ->> my_var
+
+my_var # print my_var
+```
+
+Comparison Operators:
+
+1. ==	Equal	
+2. !=	Not equal	
+3. >	Greater than	
+4. <	Less than	
+5. >=	Greater than or equal to	
+6. <=	Less than or equal to 
+
+Logical Operators:
+
+1. &	Element-wise Logical AND operator. It returns TRUE if both elements are TRUE
+2. &&	Logical AND operator - Returns TRUE if both statements are TRUE
+3. |	Elementwise- Logical OR operator. It returns TRUE if one of the statement is TRUE
+4. ||	Logical OR operator. It returns TRUE if one of the statement is TRUE.
+5. !	Logical NOT - returns FALSE if statement is TRUE
+
+Miscellaneous Operators:
+
+1. :	Creates a series of numbers in a sequence	
+2. %in%	Find out if an element belongs to a vector	
+3. %*%	Matrix Multiplication	
+
+#### R Functions:
+
+```{r , echo=TRUE}
+str <- "Hello"
+str # print the value of str
+
+# For multiple lines use ,
+str <- "Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+sed do eiusmod tempor incididunt
+ut labore et dolore magna aliqua."
+
+str # print the value of str
+
+cat(str) # To set the line brakes at the same position as the code
+
+nchar(str) # To get the length of a string
+
+# For finding characters and sequences
+str <- "Hello World!"
+
+grepl("H", str)
+grepl("Hello", str)
+grepl("X", str)
+```
+
+Escape Symbols:
+
+1. \\	Backslash
+2. \\	New Line
+3. \r	Carriage Return
+4. \t	Tab
+5. \b	Backspace
+
+#### R Operators:
+
+Arithmetic Operators:
+
+1. +	Addition
+2. -	Subtraction	
+3. *	Multiplication	
+4. /	Division	
+5. ^	Exponent		
+6. %%	Modulus (Remainder from division)	
+7. %/%	Integer Division
+
+Assignment Operators:
+
+```{r , echo=TRUE}
+my_function <- function() {
+  print("Hello World!")
+}
+
+my_function() # call the function named my_function
+```
+
+### R Data Structures:
+
+#### R Vectors:
+
+```{r , echo=TRUE}
+# Vector of strings
+fruits <- c("banana", "apple", "orange")
+
+# Print fruits
+fruits
+
+# Vector of numerical values
+numbers <- c(1, 2, 3)
+
+# Print numbers
+numbers
+
+# Vector with numerical values in a sequence
+numbers <- 1:10
+
+numbers
+
+# Length of vectors:
+fruits <- c("banana", "apple", "orange")
+
+length(fruits)
+
+# Sort a vector:
+fruits <- c("banana", "apple", "orange", "mango", "lemon")
+numbers <- c(13, 3, 5, 7, 20, 2)
+
+sort(fruits)  # Sort a string
+sort(numbers) # Sort numbers
+
+# Accessing vectors:
+fruits[1]
+
+# Change "banana" to "pear"
+fruits[1] <- "pear"
+
+# Print fruits
+fruits
+
+# Repeat vectors:
+repeat_each <- rep(c(1,2,3), each = 3)
+
+repeat_each
+
+numbers <- seq(from = 0, to = 100, by = 20)
+
+numbers
+```
+
+#### R Lists:
+
+```{r , echo=TRUE}
+# List of strings
+thislist <- list("apple", "banana", "cherry")
+
+# Print the list
+thislist
+
+# Access the list
+thislist[1]
+
+# Change item in list
+thislist <- list("apple", "banana", "cherry")
+thislist[1] <- "blackcurrant"
+
+# Length of a list
+length(thislist)
+
+# Check if item exists
+"apple" %in% thislist
+
+# Add item to list
+append(thislist, "orange")
+
+# Remove item from list
+newlist <- thislist[-1]
+
+# Range of indexes
+(thislist)[2:5]
+
+# Loop through list
+for (x in thislist) {
+  print(x)
+}
+
+# Join two lists
+list1 <- list("a", "b", "c")
+list2 <- list(1,2,3)
+list3 <- c(list1,list2)
+
+list3
+```
+
+#### R Matrices:
+
+```{r , echo=TRUE}
+# Create a matrix
+thismatrix <- matrix(c(1,2,3,4,5,6), nrow = 3, ncol = 2)
+
+# Print the matrix
+thismatrix
+
+# Access matrix items
+thismatrix <- matrix(c("apple", "banana", "cherry", "orange"), nrow = 2, ncol = 2)
+
+thismatrix[1, 2]
+
+# Access more than one row
+thismatrix <- matrix(c("apple", "banana", "cherry", "orange","grape", "pineapple", "pear", "melon", "fig"), nrow = 3, ncol = 3)
+
+thismatrix[c(1,2),]
+
+# Access more than one column
+thismatrix <- matrix(c("apple", "banana", "cherry", "orange","grape", "pineapple", "pear", "melon", "fig"), nrow = 3, ncol = 3)
+
+thismatrix[, c(1,2)]
+
+# Add rows and columns
+newmatrix <- cbind(thismatrix, c("strawberry", "blueberry", "raspberry"))
+
+# Print the new matrix
+newmatrix
+
+#Remove the first row and the first column
+thismatrix <- thismatrix[-c(1), -c(1)]
+
+thismatrix
+
+# Check if items exist
+thismatrix <- matrix(c("apple", "banana", "cherry", "orange"), nrow = 2, ncol = 2)
+
+"apple" %in% thismatrix
+
+# Matrix Length
+length(thismatrix)
+
+# Loop trough list
+for (rows in 1:nrow(thismatrix)) {
+  for (columns in 1:ncol(thismatrix)) {
+    print(thismatrix[rows, columns])
+  }
+}
+
+# Combine two matrices
+# Combine matrices
+Matrix1 <- matrix(c("apple", "banana", "cherry", "grape"), nrow = 2, ncol = 2)
+Matrix2 <- matrix(c("orange", "mango", "pineapple", "watermelon"), nrow = 2, ncol = 2)
+
+# Adding it as a rows
+Matrix_Combined <- rbind(Matrix1, Matrix2)
+Matrix_Combined
+
+# Adding it as a columns
+Matrix_Combined <- cbind(Matrix1, Matrix2)
+Matrix_Combined
+```
+
+#### R Arrays:
+
+```{r , echo=TRUE}
+# Vector of strings
+fruits <- c("banana", "apple", "orange")
+
+# Print fruits
+fruits
+
+# Vector of numerical values
+numbers <- c(1, 2, 3)
+
+# Print numbers
+numbers
+
+# Vector with numerical values in a sequence
+numbers <- 1:10
+
+numbers
+
+# Length of vectors:
+fruits <- c("banana", "apple", "orange")
+
+length(fruits)
+
+# Sort a vector:
+fruits <- c("banana", "apple", "orange", "mango", "lemon")
+numbers <- c(13, 3, 5, 7, 20, 2)
+
+sort(fruits)  # Sort a string
+sort(numbers) # Sort numbers
+
+# Accessing vectors:
+fruits[1]
+
+# Change "banana" to "pear"
+fruits[1] <- "pear"
+
+# Print fruits
+fruits
+
+# Repeat vectors:
+repeat_each <- rep(c(1,2,3), each = 3)
+
+repeat_each
+
+numbers <- seq(from = 0, to = 100, by = 20)
+
+numbers
+```
+
+#### R Lists:
+
+```{r , echo=TRUE}
+# List of strings
+thislist <- list("apple", "banana", "cherry")
+
+# Print the list
+thislist
+
+# Access the list
+thislist[1]
+
+# Change item in list
+thislist <- list("apple", "banana", "cherry")
+thislist[1] <- "blackcurrant"
+
+# Length of a list
+length(thislist)
+
+# Check if item exists
+"apple" %in% thislist
+
+# Add item to list
+append(thislist, "orange")
+
+# Remove item from list
+newlist <- thislist[-1]
+
+# Range of indexes
+(thislist)[2:5]
+
+# Loop through list
+for (x in thislist) {
+  print(x)
+}
+
+# Join two lists
+list1 <- list("a", "b", "c")
+list2 <- list(1,2,3)
+list3 <- c(list1,list2)
+
+list3
+```
+
+#### R Matrices:
+
+```{r , echo=TRUE}
+# An array with one dimension with values ranging from 1 to 24
+thisarray <- c(1:24)
+thisarray
+
+# An array with more than one dimension
+multiarray <- array(thisarray, dim = c(4, 3, 2))
+multiarray
+
+# Access Array
+multiarray[2, 3, 2]
+
+# Check if item exists
+2 %in% multiarray
+
+# Amount of rows
+dim(multiarray)
+
+# Array Length
+length(multiarray)
+
+# Loop trough array
+for(x in multiarray){
+  print(x)
+}
+```
+
+#### R Data Frames:
+
+```{r , echo=TRUE}
+# Create a data frame
+Data_Frame <- data.frame (
+  Training = c("Strength", "Stamina", "Other"),
+  Pulse = c(100, 150, 120),
+  Duration = c(60, 30, 45)
+)
+
+# Print the data frame
+Data_Frame
+
+# Summarize Data
+summary(Data_Frame)
+
+# Access items
+Data_Frame[1]
+
+Data_Frame[["Training"]]
+
+Data_Frame$Training
+
+# Add a new row
+New_row_DF <- rbind(Data_Frame, c("Strength", 110, 110))
+
+# Add a new column
+New_col_DF <- cbind(Data_Frame, Steps = c(1000, 6000, 2000))
+
+# Remove the first row and column
+Data_Frame_New <- Data_Frame[-c(1), -c(1)]
+
+# Data Frame length
+length(Data_Frame)
+
+# Combining Data Frames
+Data_Frame1 <- data.frame (
+  Training = c("Strength", "Stamina", "Other"),
+  Pulse = c(100, 150, 120),
+  Duration = c(60, 30, 45)
+)
+
+Data_Frame2 <- data.frame (
+  Training = c("Stamina", "Stamina", "Strength"),
+  Pulse = c(140, 150, 160),
+  Duration = c(30, 30, 20)
+)
+
+New_Data_Frame <- rbind(Data_Frame1, Data_Frame2)
+New_Data_Frame
+```
+
+#### R Factors:
+
+```{r , echo=TRUE}
+# Create a factor
+music_genre <- factor(c("Jazz", "Rock", "Classic", "Classic", "Pop", "Jazz", "Rock", "Jazz"))
+
+# Print the factor
+music_genre
+
+# Factor length
+length(music_genre)
+
+# Access Factors
+music_genre[3]
+
+# Chage item value
+music_genre[3] <- "Pop"
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+

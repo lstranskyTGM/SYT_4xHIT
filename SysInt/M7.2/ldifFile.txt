@@ -1,0 +1,44 @@
+dn: ou=People,dc=syt,dc=tgm,dc=ac,dc=at
+objectClass: organizationalUnit
+ou: People
+    
+# dn: ou=Groups,dc=syt,dc=tgm,dc=ac,dc=at
+# objectClass: organizationalUnit
+# ou: Groups
+    
+# dn: cn=miners,dc=syt,dc=tgm,dc=ac,dc=at
+# objectClass: posixGroup
+# cn: miners
+# gidNumber: 5000
+    
+dn: uid=leo,ou=People,dc=syt,dc=tgm,dc=ac,dc=at
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: leo
+sn: Stransky
+givenName: Leo
+cn: Leo Stransky
+displayName: Leo Stransky
+uidNumber: 10001
+gidNumber: 5000
+userPassword: {CRYPT}x
+gecos: Leo Stransky
+loginShell: /bin/bash
+homeDirectory: /home/leo
+
+dn: uid=julian,ou=People,dc=syt,dc=tgm,dc=ac,dc=at
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: julian
+sn: Neuwirth
+givenName: Julian
+cn: Julian Neuwirth
+displayName: Julian Neuwirth
+uidNumber: 10002
+gidNumber: 5000
+userPassword: {CRYPT}x
+gecos: Julian Neuwirth
+loginShell: /bin/bash
+homeDirectory: /home/julian
