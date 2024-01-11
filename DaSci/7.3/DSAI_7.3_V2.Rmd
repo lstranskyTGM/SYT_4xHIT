@@ -1,0 +1,219 @@
+---
+title: "DSAI_7.2"
+author: "Julian Neuwirth und Leo Stransky"
+date: "2023-12-12"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data Science ``Statistische Modellierung'' - Taskdescription
+
+## 1. Aufgabe:
+
+1. Lade den Datensatz 'state.x77' in R. Beschreibe die Daten anhand der internen Hilfe.
+2. Ermittle ein lineares Regressionsmodell, dass die Mordrate ('Murder') durch die unabhängigen Variablen Population, Income, Illiteracy,und Life Exp(ectancy) erklärt. Schreibe die Modellgleichung an und interpretiere die Werte der Koeffizienten im Kontext.
+3. Führe alle fünf für dieses Regressionsmodell geltenden Modellvoraussetzungen an und überprüfe diese Voraussetzungen nachweislich anhand der Zusammenfassung (summary), Quality Plots der Regression und der pairwise Scatterplot Matrix. Erkläre, ob diese Modell überhaupt gültig ist. Falls es gültig ist, gib die Qualität der Erklärung durch das Modell an.
+4. Führe eine Modellselektion der relevanten erklärenden Variablen durch.
+
+
+
+
+## Datensatz laden:
+
+```{r , echo=TRUE}
+daten <- state.x77
+#daten
+population <- daten[,1]
+income <- daten[,2]
+illiteracy <- daten[,3]
+life_exp <- daten[,4]
+murder <- daten[,5]
+
+```
+
+## Daten in state.x77:
+
+Population:
+population estimate as of July 1, 1975
+
+Income:
+per capita income (1974)
+
+Illiteracy:
+illiteracy (1970, percent of population)
+
+Life Exp:
+life expectancy in years (1969–71)
+
+Murder:
+murder and non-negligent manslaughter rate per 100,000 population (1976)
+
+
+
+## Lineare Regression erstellen
+
+```{r , echo=TRUE}
+
+df <- data.frame(m = murder, p = population, i = income, il = illiteracy, l = life_exp)
+
+
+panel.hist<-function(x,...) 
+{
+      usr<-par("usr");on.exit(par(usr))
+      par(usr=c(usr[1:2],0,1.5))
+      h<-hist(x,plot=FALSE)
+      breaks<-h$breaks;nB<-length(breaks)
+      y<-h$counts;y<-y/max(y)
+      rect(breaks[-nB],0,breaks[-1],y,col="cyan",...) 
+}
+
+panel.cor<-function(x,y,digits=2,prefix="",cex.cor,...) {
+      usr<-par("usr");on.exit(par(usr))
+      par(usr=c(0,1,0,1))
+      r<-abs(cor(x,y))
+      txt<-format(c(r,0.123456789),digits=digits)[1]
+      txt<-paste0(prefix,txt)
+      if(missing(cex.cor))cex.cor<-0.8/strwidth(txt)
+      text(0.5,0.5,txt,cex=cex.cor*r)
+}
+
+pairs(df,lower.panel=panel.smooth,upper.panel=panel.cor, diag.panel=panel.hist,las=1)
+
+
+```
+Die parameter korelieren nicht, bis auf il --> aus dem Grund wird il heraus gestrichen
+
+
+```{r , echo=TRUE}
+
+# Lineares Regressionsmodell erstellen
+lm_model <- lm(m ~ p + i + l, data = df)
+lm_model2 <- lm(m ~ p + i + l + il, data = df)
+lm_model3 <- lm(m ~ p + l, data = df)
+lm_model
+lm_model2
+lm_model3
+```
+
+## Interpretation machen
+
+Murder=B0+B1×Population+B2×Income+B4×Life_Exp+E
+
+
+Die Interpretation der Koeffizienten im Kontext des Problems wäre wie folgt:
+
+B0 (Intercept): Der y-Achsenabschnitt gibt den geschätzten durchschnittlichen Mordwert an, wenn alle unabhängigen Variablen gleich null sind. In diesem Kontext könnte es bedeuten, wie hoch die Mordrate ist, wenn alle anderen Einflussfaktoren null sind.
+
+B1 (Population): Der Koeffizient B1 gibt an, wie viel sich die geschätzte durchschnittliche Mordrate ändert, wenn die Bevölkerung um eine Einheit zunimmt, während alle anderen Variablen konstant gehalten werden.
+
+B2 (Income): Ähnlich wie B1, aber für das Einkommen. Ein positiver Koeffizient würde darauf hinweisen, dass höhere Einkommen mit höheren Mordraten verbunden sind, und umgekehrt.
+
+## Überprüfung der Modelvoraussetzungn
+
+zu erst muss man überprüfen, dass residuals nicht zu sehr von 0 abweichen
+
+```{r , echo=TRUE}
+summary(lm_model)
+plot(lm_model)
+cor(df[, c("p", "i", "l")])
+
+```
+Die Summe der Fehler beträgt ca. 0
+
+Die Fehler sind unabhängig und gleichartig verteilt 
+
+Die Fehler sind gleich schwankend 
+
+Die Residuen haben einen normalen Rand
+
+Die Residuen sind annähernd normal verteilt
+
+## Führe eine Modellselektion der relevanten erklärenden Variablen durch.
+
+```{r , echo=TRUE}
+summary(lm_model)
+summary(lm_model2)
+summary(lm_model3)
+```
+Bei dem 2. Model gibt es eine standard abweichung von 1.824  beim 1. Model von 2.102 
+
+## 2. Aufgabe
+
+```{r , echo=TRUE}
+library(MASS)
+data <- Pima.tr
+#help(Pima.tr)
+moodle <- glm(type ~ glu  + bmi + ped + age +skin, family=binomial(link ="logit"), data=Pima.tr)
+moodle2 <- glm(type ~ glu  + bmi + ped + age, family=binomial(link ="logit"), data=Pima.tr)
+summary(moodle)
+summary(moodle2)
+
+panel.hist<-function(x,...) 
+{
+      usr<-par("usr");on.exit(par(usr))
+      par(usr=c(usr[1:2],0,1.5))
+      h<-hist(x,plot=FALSE)
+      breaks<-h$breaks;nB<-length(breaks)
+      y<-h$counts;y<-y/max(y)
+      rect(breaks[-nB],0,breaks[-1],y,col="cyan",...) 
+}
+
+panel.cor<-function(x,y,digits=2,prefix="",cex.cor,...) {
+      usr<-par("usr");on.exit(par(usr))
+      par(usr=c(0,1,0,1))
+      r<-abs(cor(x,y))
+      txt<-format(c(r,0.123456789),digits=digits)[1]
+      txt<-paste0(prefix,txt)
+      if(missing(cex.cor))cex.cor<-0.8/strwidth(txt)
+      text(0.5,0.5,txt,cex=cex.cor*r)
+}
+
+pairs(data,lower.panel=panel.smooth,upper.panel=panel.cor, diag.panel=panel.hist,las=1)
+
+
+
+```
+Wir konnten aus dem zuerst erstellten Model nur folgende Parameter übernehemen:
+
+
+(Intercept) -9.971388   1.527587  -6.528 6.69e-11 ***
+
+glu          0.031255   0.006627   4.716 2.40e-06 ***
+
+bmi          0.077030   0.032251   2.388 0.016921 *  
+
+ped          1.719794   0.656088   2.621 0.008760 ** 
+
+age          0.058603   0.017574   3.335 0.000854 ***
+
+Da bei den anderen die Korellation von den Parametern zu hoch war. So wurde die Wahrscheinlichkeit, dass die Werte auch wirklich in dem vorhergesagten Bereich liegen, zu klein --> ich habe die Paramter aus dem Model genommen.
+
+Da wir für das Model den link = "logit" gewählt haben müssen wir beim Ausrechnen der "Gefährdung auf Diabetes" mit dem exp() rechnen:
+
+exp(-9.971388+0.058603*51+1.719794*3+0.077030*40+0.031255*100)
+80.11371
+
+Hier haben wir in das Model Werte eingesetzt und alles hoch e genommen.
+--> Ergebnis: Das Risiko für die Person Diabetes zu bekommen ist 80-mal höher als keins zu bekommen.
+
+Intercept --> ist der Anfangswerte (Wenn alle Paramter auf 0 sind ist die Grund-Wahrscheinlichkeit auf Diabetes bei 4.671767e-05)
+
+## Estimate (Schätzung):
+
+Dies ist der geschätzte Wert für den Regressionskoeffizienten des jeweiligen Prädiktors. In einer logistischen Regression repräsentiert dieser Koeffizient den natürlichen Logarithmus des Verhältnisses der Chancen (Odds Ratio) für den jeweiligen Prädiktor.
+
+## Std. Error (Standardfehler):
+
+Der Standardfehler misst die Unsicherheit der Schätzung des Regressionskoeffizienten. Je größer der Standardfehler, desto unsicherer ist die Schätzung.
+
+## z value (z-Wert):
+
+Der z-Wert ist das Verhältnis der geschätzten Koeffizienten zum Standardfehler. Es wird verwendet, um festzustellen, ob ein Koeffizient signifikant von null verschieden ist. Ein großer z-Wert (in Bezug auf den Standardfehler) deutet darauf hin, dass der geschätzte Koeffizient signifikant ist.
+
+## Pr(>|z|) (p-Wert):
+
+Der p-Wert gibt an, wie wahrscheinlich es ist, den beobachteten z-Wert zu erhalten, wenn die wahre Wirkung des Prädiktors tatsächlich null ist (kein Effekt). Ein kleiner p-Wert (typischerweise unter 0,05) deutet darauf hin, dass der geschätzte Koeffizient signifikant von null verschieden ist.
+
