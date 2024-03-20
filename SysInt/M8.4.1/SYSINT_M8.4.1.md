@@ -144,6 +144,28 @@ DNS=8.8.8.8
 DNS=8.8.4.4
 ```
 
+```bash
+# Disabeling nft (Overkill ufw is enough)
+sudo systemctl stop nftables
+# Changing netplan configuration
+sudo nano /etc/netplan/01-netcfg.yaml
+# Apply Changes
+sudo netplan apply
+```
+
+```yaml
+network:
+    ethernets:
+        ens33:
+            addresses:
+            - 192.168.19.10/24
+            gateway4: 192.168.2.1
+            nameserver:
+                addresses: []
+                search: []
+    version: 2
+```
+
 ### Router Configuration
 
 ```bash
@@ -155,11 +177,30 @@ sudo apt-get install openssh-server -y
 # Enable IP Forwarding
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 # Apply changes by running
-sudo sysctl -p
+sudo sysctl -
+
+
+
+# Create Network Configuration Files
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 192.168.KatNr.10
 ```
 
-```ini
-
+```yaml
+network:
+    ethernets:
+        ens37:
+            dhcp4: false
+            dhcp4-overrides:
+                use-routes: false
+            addresses:
+            - 192.168.19.1/24
+            # gateway4: 192.168.2.1
+            nameservers:
+                addresses: []
+                search: []
+        ens33:
+            dhcp4: true
+    version: 2
 ```
 
 ## Summary
