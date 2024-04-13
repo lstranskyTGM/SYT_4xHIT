@@ -51,7 +51,7 @@ b) Konfiguriere die Port-Weiterleitung (DNAT) wie folgt:
 - eth1:443 -> 192.168.KatNr.10:443
 - eth1:2222 -> 192.168.KatNr.10:22
 
-## Umsetzung
+## Implementation
 
 ### Server Configuration
 
@@ -83,6 +83,7 @@ sudo nft -f /etc/nftables.conf
 sudo nft list ruleset
 ```
 
+`nftables` Configuration:
 ```conf
 #!/usr/sbin/nft -f
 
@@ -133,6 +134,8 @@ ip addr show enp0s3
 ifconfig -a
 ```
 
+
+`systemd-networkd` Configuration:
 ```ini
 [Match]
 Name=enp0s3
@@ -153,6 +156,7 @@ sudo nano /etc/netplan/01-netcfg.yaml
 sudo netplan apply
 ```
 
+`netplan` Configuration:
 ```yaml
 network:
     ethernets:
@@ -166,6 +170,16 @@ network:
     version: 2
 ```
 
+`netplan` Configuration: (Version 2)
+```yaml
+network:
+  version: 2
+  ethernets:
+    enp0s3:
+      dhcp4: no
+      addresses: [192.168.19.10/24]
+```
+
 ### Router Configuration
 
 ```bash
@@ -177,14 +191,14 @@ sudo apt-get install openssh-server -y
 # Enable IP Forwarding
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 # Apply changes by running
-sudo sysctl -
-
-
-
+sudo sysctl -p
 # Create Network Configuration Files
-iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 192.168.KatNr.10
+sudo iptables -t nat -A PREROUTING -i enp0s8 -p tcp --dport 80 -j DNAT --to-destination 192.168.19.10:80
+sudo iptables -t nat -A PREROUTING -i enp0s8 -p tcp --dport 443 -j DNAT --to-destination 192.168.19.10:443
+sudo iptables -t nat -A PREROUTING -i enp0s8 -p tcp --dport 2222 -j DNAT --to-destination 192.168.19.10:22
 ```
 
+`netplan` Configuration:
 ```yaml
 network:
     ethernets:
@@ -201,6 +215,102 @@ network:
         ens33:
             dhcp4: true
     version: 2
+```
+
+`netplan` Configuration: (Version 2)
+```yaml
+network:
+  version: 2
+  ethernets:
+    enp0s3:  # Internal Interface
+      dhcp4: no
+      addresses: [192.168.19.1/24]
+    enp0s8:  # External Interface (bridge)
+      dhcp4: true
+```
+
+## Testing
+
+### 1. Verify iptables Configuration
+
+```bash
+sudo iptables -t nat -L PREROUTING -v -n
+```
+
+- [X] works as expected
+
+### 2. SSH Connection Test (Router to Server)
+
+```bash
+ssh -p 22 192.168.19.10
+```
+
+- [X] works as expected
+
+### 3. External SSH Connection Test
+
+```bash
+ssh -p 2222 external-ip-of-router
+```
+
+- [ ] works as expected
+
+## Problems
+
+### 1. Network Adapter Configuration
+
+- `nftables` configuration did not work
+- `netplan` configuration did not work
+
+#### Changed VM network configuration
+
+1. Server:
+    - Adapter 1: Internes Netzwerk
+2. Router:
+    - Adapter 1: Internes Netzwerk
+    - Adapter 2: Netzwerkbrücke
+
+### 2. External SSH Connection
+
+- `ssh -p 2222 external-ip-of-router` did not work
+
+#### Check Firewall Settings & Port Forwarding
+
+```bash
+# Check using verbose mode
+ssh -vvv -p 2222 external-ip-of-router
+```
+
+```plaintext
+OpenSSH_for_Windows_8.6p1, LibreSSL 3.4.3
+debug3: Failed to open file:C:/Users/Leonhard/.ssh/config error:2
+debug3: Failed to open file:C:/ProgramData/ssh/ssh_config error:2
+debug2: resolve_canonicalize: hostname 192.168.200.70 is address
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts' -> 'C:\\Users\\Leonhard/.ssh/known_hosts'
+debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts2' -> 'C:\\Users\\Leonhard/.ssh/known_hosts2'
+debug1: Authenticator provider $SSH_SK_PROVIDER did not resolve; disabling
+debug3: ssh_connect_direct: entering
+debug1: Connecting to 192.168.200.70 [192.168.200.70] port 2222.
+debug3: finish_connect - ERROR: async io completed with error: 10060, io:000001E0A0BCBD90
+debug1: connect to address 192.168.200.70 port 2222: Connection timed out
+ssh: connect to host 192.168.200.70 port 2222: Connection timed out
+```
+
+```bash
+# Log Check on Server
+sudo cat /var/log/auth.log | grep sshd
+```
+
+```plaintext
+Apr 13 19:54:28 mail sshd[3288]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.19.1  user=user
+Apr 13 19:54:31 mail sshd[3288]: Failed password for user from 192.168.19.1 port 45366 ssh2
+Apr 13 19:54:33 mail sshd[3288]: Accepted password for user from 192.168.19.1 port 45366 ssh2
+Apr 13 19:54:33 mail sshd[3288]: pam_unix(sshd:session): session opened for user user(uid=1000) by (uid=0)
+Apr 13 19:54:36 mail sshd[3347]: Received disconnect from 192.168.19.1 port 45366:11: disconnected by user
+Apr 13 19:54:36 mail sshd[3347]: Disconnected from user user 192.168.19.1 port 45366
+Apr 13 19:54:36 mail sshd[3288]: pam_unix(sshd:session): session closed for user user
+Apr 13 20:19:09 mail sshd[4093]: Accepted password for user from 192.168.19.1 port 36740 ssh2
+Apr 13 20:19:09 mail sshd[4093]: pam_unix(sshd:session): session opened for user user(uid=1000) by (uid=0)
 ```
 
 ## Summary
@@ -296,10 +406,10 @@ sudo ufw allow https
 ## Bewertung
 
 Grundanforderungen überwiegend erfüllt
-- [ ] Task 1 - Absicherung des Servers
+- [X] Task 1 - Absicherung des Servers
 
 Grundanforderungen zur Gänze erfüllt
-- [ ] Task 2 - Routing, Port-Forwarding und NAT
+- [X] Task 2 - Routing, Port-Forwarding und NAT
 
 
 ## Quellen
