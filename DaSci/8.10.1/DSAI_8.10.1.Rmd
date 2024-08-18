@@ -1,0 +1,286 @@
+---
+title: "DSAI_8.10.1"
+author: "Leonhard Stransky"
+date: '`r Sys.Date()`'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data Science \`\`Grundlagen des maschinellen Lernens'' - Taskdescription
+
+## Einführung
+
+Die Theorieeinheiten sollen als Einführung in die Grundlagen des maschinellen Lernens dienen. Zum Umgang mit R und RStudio oder Python ist der Link aus den Theorie Einheiten empfohlen.
+
+## Ziele
+
+Das Ziel ist es grundlegende Methoden des maschinellen Lernens zu verstehen, einsetzen und interpretieren zu können.
+
+## Voraussetzungen
+
+-   Kenntnis von Markdown, LaTeX und Grundkenntnisse in R und Python
+-   funktionstüchtige Installation von R, RStudio, Python auf eurem Rechner, virtueller Maschine etc.
+-   Kenntnis von Datenaufteilung in Training, Test und Validationsdatensätze; In-Sample, Out-of-sample Prädiktion als Maße für Modellgüte
+-   Kenntnis von Overfitting, Underfitting und Maße für Modellprädiktion für unterschiedliche Modelle und Algorithmen
+-   Kenntnis von Kreuzvalidierung (Cross-validation) und (Re-) Sampling Methoden zur Modellevaluation
+
+## Aufgaben
+
+### Aufgabe 1:
+
+#### Lade den Datensatz 'economics' aus dem Paket 'ggplot2' R.
+
+```{r, echo=TRUE}
+library(ggplot2)
+data("economics")
+help("economics")
+hist(economics$unemploy, main="Unemploy")
+qqnorm(economics$unemploy)
+qqline(economics$unemploy)
+
+hist(economics$uempmed, main = "Uemped")
+qqnorm(economics$uempmed)
+qqline(economics$uempmed)
+```
+
+#### 1. Passe ein lineares Modell an, das die Anzahl der Arbeitslosen 'unemploy' durch die mittleren Anzahl der Tage in Arbeitslosigkeit 'uempmed' erklärt und vice versa. Erkläre den Unterschied zwischen diesen beiden Modellen.
+
+```{r, echo=TRUE}
+lm_unemploy <- lm(unemploy ~ uempmed, data=economics)
+summary(m1)
+par(mfrow=c(2,2))
+plot(m1)
+```
+
+```{r, echo=TRUE}
+lm_uempmed <- lm(uempmed ~ unemploy, data=economics)
+summary(m2)
+par(mfrow=c(2,2))
+plot(m2)
+```
+
+#### 2. Stelle jeweils die Originaldaten und das angepasste lineare Modell in einem gemeinsamen Plot graphisch dar.
+
+```{r, echo=TRUE}
+uempmedText <- "median duration of unemployment, in weeks (uempmed)"
+unemployText <- "number of unemployed in thousands (unemploy)"
+plot(economics$uempmed, economics$unemploy, xlab=uempmedText, ylab=unemployText , main="Unemploy ~ Uempmed")
+abline(lm_unemploy)
+plot(economics$unemploy, economics$uempmed, xlab=unemployText, ylab=uempmedText, main="Uempmed ~ Unemploy")
+abline(lm_uempmed)
+```
+
+#### 3. Wende die Exponentialfunktion exp bzw Logarithmusfunktion log in geeigneter Weise an, um die Daten so zu transformieren, dass ein lineares Modell angepasst werden kann.
+
+```{r, echo=TRUE}
+lm_unemploy_log <- lm(unemploy ~ log(uempmed), data=economics)
+summary(lm_unemploy_log)
+
+lm_uempmed_log <- lm(log(uempmed) ~ unemploy, data=economics)
+summary(lm_uempmed_log)
+```
+
+#### 4. Stelle die Originaldaten und das angepasste nichtlineare Modell im selben Plot graphisch dar. (EK) Hinweis: Transformiere dafür in die Originalkoordinaten zurück und gib das resultierende Modell bzgl. der nichttransformierten Variablen an.
+
+```{r, echo=TRUE}
+plot(economics$uempmed, economics$unemploy, xlab = "Mittlere Anzahl der Tage in Arbeitslosigkeit (uempmed)", ylab = "Anzahl der Arbeitslosen (unemploy)", main = "unemploy erklärt durch uempmed")
+lines(economics$uempmed, predict(lm_unemploy_log), col = "red")
+
+plot(economics$unemploy, economics$uempmed, xlab = "Anzahl der Arbeitslosen (unemploy)", ylab = "Mittlere Anzahl der Tage in Arbeitslosigkeit (uempmed)", main = "uempmed erklärt durch unemploy")
+lines(economics$unemploy, exp(predict(lm_uempmed_log)), col = "red")
+```
+
+#### 5. Passe ein polynomiales Modell mit einem Polynom 10. Grades an.
+
+raw = T ...
+
+```{r, echo=TRUE}
+lm_unemploy_poly <- lm(unemploy ~ poly(uempmed, degree=10, raw=T), data = economics)
+lm_uempmed_poly <- lm(uempmed ~ poly(uempmed, degree=10, raw=T), data = economics)
+summary(lm_unemploy_poly)
+summary(lm_uempmed_poly)
+```
+
+#### 6. Ermittle für alle drei Modelle den Root Mean Squared Error, Mean Squared Error und Median Absolute Deviation bei In-sample Prediction auf dem gesamten Datensatz.
+
+```{r, echo=TRUE}
+analyse <- function(model,daten) {
+  model_predict <- predict(model, newdata = economics)
+  
+  # Root Mean Squared Error (RMSE):
+  modell_rmse <- sqrt(mean((daten - model_predict)^2))
+ 
+  # Mean Squared Error (MSE)
+  modell_mse <- mean((daten - model_predict)^2)
+  
+  # Median Absolute Deviation (MAD)
+  modell_mad <- median(abs(daten - median(model_predict)))
+  
+  
+  return(c(modell_rmse, modell_mse, modell_mad))
+}
+
+
+
+m1_lm <- analyse(lm_unemploy, economics$unemploy)
+m1_log <- (analyse(model_log1, economics$unemploy))
+m1_poly <- analyse(poly_model_unemploy, economics$unemploy)
+m2_lm <- analyse(lm_unemploy, economics$uempmed)
+m2_log <- exp(analyse(model_log2, economics$uempmed))
+m2_poly <- analyse(poly_model_unemploy, economics$uempmed)
+titel <- c("RMSE","MSE","MAD")
+a <- cbind(titel, m1_lm, m1_log, m1_poly)
+b <- cbind(titel, m2_lm, m2_log, m2_poly)
+a <- as.data.frame(a)
+b <- as.data.frame(b)
+a
+b
+# a <- a |>
+#   pivot_longer(-titel, names_to = "Model", values_to = "Value")
+# a |>
+#   dplyr::select(titel, Model, Value) |>
+#   ggplot(aes(x = titel, y = Value, fill = Model)) + geom_bar(stat = "identity", position = "dodge")
+# 
+# b <- b |>
+#   pivot_longer(-titel, names_to = "Model", values_to = "Value")
+# b |>
+#   dplyr::select(titel, Model, Value) |>
+#   ggplot(aes(x = titel, y = Value, fill = Model)) + geom_bar(stat = "identity", position = "dodge")
+```
+
+#### 7. Stelle die Originaldaten und das angepasste nichtlineare Modell im selben Plot graphisch dar. (EK)
+
+/
+
+#### 8. Erkläre anhand der angepassten Modelle, was Underfitting, Overfitting und angemessene Modellanpassung bedeuten. (GK) Beschreibe, wie sich eine falsche Modellauswahl auf die Eigenschaften des Modell (Residuen, Signifikanz von Koeffizienten, Gütemaß etc.) auswirkt. (GK)
+
+```{r , echo=TRUE}
+plot(economics$uempmed, economics$unemploy, xlab = "Anzahl der Arbeitslosen (unemploy)", ylab = "Mittlere Anzahl der Tage in Arbeitslosigkeit (uempmed)", main = "uempmed erklärt durch unemploy")
+lines(smooth.spline(economics$uempmed, predict(poly_model_unemploy)), col="red")
+
+
+plot(economics$unemploy, economics$uempmed, xlab = "Anzahl der Arbeitslosen (unemploy)", ylab = "Mittlere Anzahl der Tage in Arbeitslosigkeit (uempmed)", main = "uempmed erklärt durch unemploy")
+lines(smooth.spline(economics$unemploy, predict(poly_model_uempmed)), col="red")
+```
+
+### Aufgabe 2:
+
+Aufbau auf WS: Lade den Datensatz 'Pima.tr' aus dem package 'MASS' in R. Ermittle ein logistisches Regressionsmodell, dass das Auftreten von Diabetes ('type') durch die übrigen unabhängigen Variablen Alter (age), Anzahl der Schwangerschaften (npreg), BMI, Glukosespiegel (glu), Blutdruck (bp), familiäre Häufung von Diabetesfällen (ped) und Hautfaltendickemessung am Oberarm (skin) erklärt. Der Pima Indian Datensatz wurde bereits von den Paketentwicklern in einem Trainingsdatensatz 'Pima.tr' und einen Testdatensatz 'Pima.te' (Out of sample) bzw. 'Pima.tr' (Within sample) aufgeteilt. Nimm dein logistisches Regressionsmodell aus der 2. Übung und ermittle (within sample) True Positives, True Negatives, False Positives, False Negatives, Sensitivität und Spezifizität. Führe die Prädiktion für die 'Pima.te' Daten durch und ermittle die Qualität der Prädiktion durch (out of sample) True Positives, True Negatives, False Positives, False Negatives, Sensitivität und Spezifizität für unterschiedliche Cut-Offs.
+
+#### 1. Stelle die Resultate beider Vorhersagen einander in einer Tabelle gegenüber. Erkläre anhand der durchgeführten Analysen die Konzepte Within-sample-prediction und Out-of-sample-prediction.
+
+```{r, echo=TRUE}
+# Packete laden
+library(MASS)
+pimatr <- Pima.tr
+pimatr
+modell_type_logistisch <- glm(type ~ age + bmi + glu + ped, data = Pima.tr, family = "binomial"(link ="logit"))
+summary(modell_type_logistisch)
+```
+
+```{r, echo=TRUE}
+# (within sample) True Positives, True Negatives, False Positives, False Negatives, Sensitivität und Spezifizität
+predicted_values1 <- predict(modell_type_logistisch)
+predicted_type1 <- ifelse(predicted_values1 >= 0, 1, 0)
+actual_values1 <- ifelse(Pima.tr$type == "Yes", 1, 0)
+
+TP1 <- sum(predicted_type1 == 1 & actual_values1 == 1)
+FP1 <- sum(predicted_type1 == 1 & actual_values1 == 0)
+TN1 <- sum(predicted_type1 == 0 & actual_values1 == 0)
+FN1 <- sum(predicted_type1 == 0 & actual_values1 == 1)
+
+sensitivity1 <- TP1 / (TP1 + FN1)
+specificity1 <- TN1 / (TN1 + FP1)
+sensitivity1
+specificity1
+```
+
+```{r, echo=TRUE}
+# (out of sample) True Positives, True Negatives, False Positives, False Negatives, Sensitivität und Spezifizität
+predicted_values2 <- predict(modell_type_logistisch,Pima.te)
+predicted_type2 <- ifelse(predicted_values2 >= 0, 1, 0)
+actual_values2 <- ifelse(Pima.te$type == "Yes", 1, 0)
+
+TP2 <- sum(predicted_type2 == 1 & actual_values2 == 1)
+FP2 <- sum(predicted_type2 == 1 & actual_values2 == 0)
+TN2 <- sum(predicted_type2 == 0 & actual_values2 == 0)
+FN2 <- sum(predicted_type2 == 0 & actual_values2 == 1)
+
+sensitivity2 <- TP2 / (TP2 + FN2)
+specificity2 <- TN2 / (TN2 + FP2)
+sensitivity2
+specificity2
+```
+
+#### 2. Erstelle einen gemeinsamen Datensatz Pima, der die Daten aus dem Trainings- und Testdatensatz enthält. Für diesen Datensatz führe eine 10-fache Kreuzvalidierung durch und stelle die Resultate dieser Kreuzvalidierung geeignet tabellarisch oder graphisch dar.
+
+```{r, echo=TRUE}
+plot(1, type = "n", xlab = "", ylab = "", xlim = c(0, 4), ylim = c(0, 12), axes = FALSE)
+text(1, 9, TP1, cex = 2)
+text(1, 8, "TP")
+text(3, 9, FN1, cex = 2)
+text(3, 8, "FN")
+text(1, 3, FP1, cex = 2)
+text(1, 2, "FP")
+text(3, 3, TN1, cex = 2)
+text(3, 2, "TN")
+text(0, 11, "Actual TRUE", pos = 2, srt= 90)
+text(0, 5, "Actual FALSE", pos = 2, srt= 90)
+text(1.5, 12, "Predicted TRUE", pos = 2)
+text(3.5, 12, "Predicted FALSE", pos = 2)
+
+plot(1, type = "n", xlab = "", ylab = "", xlim = c(0, 4), ylim = c(0, 12), axes = FALSE)
+text(1, 9, TP2, cex = 2)
+text(1, 8, "TP")
+text(3, 9, FN2, cex = 2)
+text(3, 8, "FN")
+text(1, 3, FP2, cex = 2)
+text(1, 2, "FP")
+text(3, 3, TN2, cex = 2)
+text(3, 2, "TN")
+text(0, 11, "Actual TRUE", pos = 2, srt= 90)
+text(0, 5, "Actual FALSE", pos = 2, srt= 90)
+text(1.5, 12, "Predicted TRUE", pos = 2)
+text(3.5, 12, "Predicted FALSE", pos = 2)
+```
+
+#### 3. Im WS hast du die Resultate der logistischen Regression als ROC-Kurve dargestellt. Für diese ROC-Kurve wurde ein Konfidenzintervall mithilfe von Bootstrapping ermittelt. Erkläre, wie die Bootstrapping Methode funktioniert. Erkläre konkret, wie man durch diesen Algorithmus ein Konfidenzintervall für die ROC-Kurve erhält. (EK)
+
+/
+
+#### 4. Ermittle die Bootstrapping-Verteilung des Mittelwertes der Glucosekonzentration 'glu' für 10000 Bootstrap-Samples der Größe 100. (EK)
+
+/
+
+#### 5. Stelle diese Verteilung graphisch mithilfe eines Histogramms dar und zeichne darin das 95% Bootstrapping-Konfidenzintervall ein. (EK)
+
+/
+
+## Abgabe
+
+Das Protokoll ist als PDF-Dokument abzugeben vorzulegen.
+
+## Bewertung
+
+Gruppengrösse: 1 Person
+
+### Anforderungen überwiegend erfüllt
+
+-   aktuelle Markdown- oder LaTeX-Protokollvorlage aus Github bzw. Moodle verwendet
+-   grundlegende Beschreibung und Verwendung der im Unterricht angeführten Begriffe: Training-, Test- und Validationsdatensätze; In-Sample, Out-of-sample Prädiktion; Overfitting, Underfitting; Kreuzvalidierung (Cross-validation) und (Re-) Sampling Methoden
+-   Codebeispiele referenziert
+
+### Anforderungen zur Gänze erfüllt
+
+-   zusätzliche zu den grundlegenden Aufgabenstellungen die vertiefende Aufgabenstellungen zu den einzelnen Kapitel durchgeführt (EK)
+-   Verbale Beschreibung und Erklärung aller angeführter Begriffe und deren Anwendung in konkreten Beispielen in vollständigen deutschen Sätzen
+-   ausführliche Codebeispiele und Visualisierungen dokumentiert
+
+## Quellen
+
+-   <https://www.youtube.com/watch?v=ZYN0YD7UfK4>
+-   <https://www.mathsisfun.com/data/probability-false-negatives-positives.html>
+-   <https://learn.datacamp.com/courses/unsupervised-learning-in-r>
