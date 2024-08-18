@@ -112,17 +112,3 @@ Grundanforderungen vollständig erfüllt
 [1] https://www.linuxbabe.com/mail-server/ubuntu-20-04-iredmail-server-installation
 
 [2] https://ubuntu.com/download/server
-
-
-
-
-
-
-
-
-
-
-
-
-
-
