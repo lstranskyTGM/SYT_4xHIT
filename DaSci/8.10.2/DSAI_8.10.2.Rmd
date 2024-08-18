@@ -1,0 +1,181 @@
+---
+title: "DSAI_8.10.2"
+author: "Julian Neuwirth & Leonhard Stransky"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Dimensionsreduktion und Faktorenanalyse
+
+## Laden der Daten
+
+```{r start}
+places_tf <- read.csv(file = "places_tf.csv")
+round(head(places_tf), digits = 5)
+```
+## Aufgabe 1
+
+### PCA
+
+Principal Component Analysis (PCA) ist eine weit verbreitete Methode zur Dimensionsreduktion und zur Entdeckung von Mustern in Daten. Es ist besonders nützlich, wenn man mit hochdimensionalen Daten arbeitet, wie beispielsweise Bildern oder Daten aus Sensoren, und eine kompaktere Darstellung benötigt, die den größten Teil der Varianz der Daten beibehält.
+
+Hier ist eine grundlegende Erklärung, wie PCA funktioniert:
+
+Varianzmaximierung: PCA zielt darauf ab, die Achsen zu finden, entlang derer die Daten die maximale Varianz aufweisen. Diese Achsen werden als Hauptkomponenten bezeichnet.
+
+Orthogonalität: Die Hauptkomponenten sind orthogonal zueinander, was bedeutet, dass sie unkorreliert sind.
+
+Dimensionenreduktion: Nachdem die Hauptkomponenten identifiziert wurden, können die Daten auf diese neuen Achsen projiziert werden. Dabei werden die Dimensionen reduziert, da nur die ersten k Hauptkomponenten ausgewählt werden, die die meiste Varianz beibehalten.
+
+```{r start}
+pca <- prcomp(places_tf, scale = TRUE)
+summary(pca)
+```
+Werte die Herauskomment:
+
+Standardabweichung (Standard Deviation):
+Die Standardabweichung ist ein Maß für die Streuung oder Variation von Datenpunkten um den Mittelwert. In PCA wird die Standardabweichung verwendet, um die Streuung der Daten entlang jeder Hauptkomponente zu messen
+
+Anteil der Varianz (Proportion of Variance):
+Der Anteil der Varianz, auch als Erklärte Varianz oder Eigenwert bezeichnet, gibt an, wie viel Variation in den Daten durch jede Hauptkomponente erklärt wird. In PCA werden die Hauptkomponenten in absteigender Reihenfolge nach ihrem Beitrag zur Gesamtvariation der Daten angeordnet. 
+
+Kumulative Proportion (Cumulative Proportion):
+Die kumulative Proportion ist die Summe der Anteile der Varianz über alle vorherigen Hauptkomponenten bis zu einer bestimmten Komponente. Es gibt an, wie viel Variation in den Daten durch die ersten k Hauptkomponenten erklärt wird.
+
+
+### Korrelationsmatrix 
+
+```{r start}
+panel.hist<-function(x,...) 
+{
+      usr<-par("usr");on.exit(par(usr))
+      par(usr=c(usr[1:2],0,1.5))
+      h<-hist(x,plot=FALSE)
+      breaks<-h$breaks;nB<-length(breaks)
+      y<-h$counts;y<-y/max(y)
+      rect(breaks[-nB],0,breaks[-1],y,col="cyan",...) 
+}
+
+panel.cor<-function(x,y,digits=2,prefix="",cex.cor,...) {
+      usr<-par("usr");on.exit(par(usr))
+      par(usr=c(0,1,0,1))
+      r<-abs(cor(x,y))
+      txt<-format(c(r,0.123456789),digits=digits)[1]
+      txt<-paste0(prefix,txt)
+      if(missing(cex.cor))cex.cor<-0.8/strwidth(txt)
+      text(0.5,0.5,txt,cex=cex.cor*r)
+}
+
+pairs(places_tf,lower.panel=panel.smooth,upper.panel=panel.cor, diag.panel=panel.hist,las=1)
+
+library(reshape2)
+correlation_melted <- melt(cor(places_tf))
+
+library(ggplot2)
+ggplot(correlation_melted, aes(Var1, Var2, fill = value)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1,1), space = "Lab", name="Correlation") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 12, hjust = 1)) + coord_fixed()
+```
+
+### telle einen Screeplot dar, um festzustellen, wieviel Information in den ersten Hauptkomponenten steckt.
+
+```{r start}
+pca.var <- pca$sdev^2
+pca.var.per <- round(pca.var/sum(pca.var)*100, 1)
+plot(pca,type="lines", main = "Scree Plot");lines(c(2,2),c(0,1.25),col=2)
+```
+
+### Wähle die Hauptkomponenten basierend auf den Eigenwerten aus. Die Hauptkomponenten sind lineare Kombinationen der ursprünglichen Variablen.
+
+```{r start}
+pca$rotation[, c(1,2)]
+```
+### Biplot 
+
+```{r start}
+install.packages("ggfortify")
+library(ggfortify)
+
+?autoplot
+autoplot(pca, data = places_tf, loadings = T, loadings.label = TRUE, loadings.label.size = 3)
+
+biplot(pca, scale = 0, choices = 1:2, main = "Biplot: PC1 vs PC2")
+biplot(pca, scale = 0, choices = 2:3, main = "Biplot: PC2 vs PC3")
+biplot(pca, scale = 0, choices = c(1,3), main = "Biplot: PC1 vs PC3")
+```
+### Argumentiere:
+
+Die PCs können als Achsen verwendet werden, wie man im vorherigen Punkt erkennnen kann.
+
+Identifikation von Mustern und Zusammenhängen: Durch die Darstellung der ersten drei Hauptkomponenten in einem Biplot können Muster und Zusammenhänge zwischen den Variablen und den Beobachtungen im Datensatz visualisiert werden. Dies ermöglicht es, komplexe Beziehungen zwischen den Variablen auf ein einfacheres, zweidimensionales oder dreidimensionales Raum zu reduzieren und zu verstehen.
+
+Variable Auswahl: Beim Betrachten des Biplots kannst du sehen, welche Variablen stark zur Variabilität in den Daten beitragen. Variablen, die sich in ähnlichen Richtungen im Biplot bewegen, haben eine hohe Korrelation und tragen wahrscheinlich ähnliche Informationen bei. Dadurch kannst du wichtige Variablen identifizieren und weniger informative oder redundante Variablen entfernen, um die Dimensionalität des Datensatzes zu reduzieren.
+
+Erkennen von Ausreißern und Gruppierungen: Biplot-Visualisierungen können auch dabei helfen, Ausreißer und Gruppierungen in den Daten zu identifizieren. Beobachtungen, die sich weit von den anderen im Biplot entfernt befinden, könnten potenzielle Ausreißer sein und weitere Untersuchungen erfordern. Gruppierungen von Beobachtungen im Biplot können auf natürliche Cluster oder Muster im Datensatz hinweisen.
+
+Interpretation der Hauptkomponenten: Die Achsen im Biplot repräsentieren die ersten drei Hauptkomponenten, die die maximale Variation im Datensatz erfassen. Durch die Interpretation dieser Achsen kannst du verstehen, welche Merkmale oder Kombinationen von Merkmalen für die Hauptvariation im Datensatz verantwortlich sind. Dies ermöglicht eine interpretierbare Zusammenfassung der Daten und eine Reduzierung der Dimensionalität auf diejenigen Aspekte, die am meisten zur Variation beitragen.
+
+## Aufgabe 2:
+
+### explorative Faktorenanalyse
+
+```{r faktor}
+factor<-factanal(places_tf,2, rotation="varimax")
+print(factor$loadings)
+```
+### Ausblenden 
+
+```{r faktor}
+install.packages("xtable")
+library(xtable)
+library(tidyr)
+library(ggplot2)
+
+print(factor, cutoff = .3)
+
+fa_loadings <- factor$loadings
+
+for (i in seq_along(fa_loadings)) {
+  if(abs(fa_loadings[i]) < 0.3){
+    fa_loadings[i] <- 0
+  }
+}
+
+fa_data <- as.data.frame(fa_loadings[])
+
+fa_data$Variable <- rownames(fa_data)
+
+fa_data <- fa_data |> pivot_longer(-Variable, names_to = "Factor", values_to = "Value")
+fa_data <- subset(fa_data, Value != 0)
+
+fa_data |> 
+  dplyr::select(Factor, Variable, Value) |>
+  ggplot(aes(x = Factor, y = Value, fill = Variable)) + geom_bar(stat = "identity", position = "dodge") +
+  geom_hline(yintercept = 0.3, linetype = "dashed", size = 0.3)
+
+```
+### Interpretation
+
+Factor 1 würde ich "Bildung und Wohlstand" nennen, da folgende Variablen einen Einfluss auf den Factor haben: "arts", "educate", "health", "housing" und "trans".
+
+Factor 2 würde ich "Infrastruktur" nennen, da folgende Variablen einen Einfluss auf den Factor haben: "arts", "crime", "econ", "housing", "recreate" und "trans". 
+
+
+### 2 Factoren in Bioplot 
+
+```{r f_biplot}
+library(ggfortify)
+fa_analyse <- factanal(places_tf, factors = 3, scores = 'regression')
+autoplot(fa_analyse, data = places_tf, loadings = T, loadings.label = TRUE, loadings.label.size = 3)
+```
+
+### Argumentation:
+
+Die Factoren können als Achsen verwendet werden, wie man im vorherigen Punkt erkennnen kann.
+
