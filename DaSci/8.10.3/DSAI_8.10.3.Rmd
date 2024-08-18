@@ -1,0 +1,137 @@
+---
+title: "DSAI_8.10.3"
+author: "Julian Neuwirth & Leonhard Stransky"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Klassifikation und Clustering
+
+## Laden der Daten
+
+```{r start}
+daten <- iris
+daten
+
+```
+
+## Aufgabe 1
+
+### Normalisiere die ersten 4 Spalten so, dass keine negativen Werte mehr vorkommen und sie zwischen 0 und 1 liegen. Weise sie einem dataframe zu. Weise die kategoriale 5. Spalte einem Zielvektor zu.
+
+```{r start}
+nor <-function(x) { (x -min(x))/(max(x)-min(x)) }
+dia_norm <- as.data.frame(lapply(daten[,c(1,2,3,4)], nor))
+summary(dia_norm)
+```
+### Teile die Daten (erklärende und Zeildaten) zufällig in Trainings- und Testdaten auf, sodass 80% der Daten zum Training und 20% der Daten zum Testen verwendet werden.
+
+```{r start}
+set.seed(457314)
+ran <- sample(1:nrow(daten), 0.8 * nrow(daten))
+dia_train <- dia_norm[ran,1:4]
+dia_test <- dia_norm[-ran,1:4]
+nrow(dia_train)
+nrow(dia_test)
+```
+
+### Führe die k-nearest-neighbour Klassifikation durch. (R: knn, setze k=10)
+
+```{r start}
+library(class)
+
+#str(dia_norm$Species)
+
+dia_target <- as.factor(iris[ran,"Species"])
+dia_target
+
+pr <- knn(dia_train,dia_test,cl=dia_target,k=10)
+pr
+```
+### Ermittle die Confusionmatrix (False Positives, False Negatives, True Positives, True Negatives) der Klassifikation und die Sensitivität und Spezifizität. Interpretiere die Vorhersagequalität.
+
+```{r start}
+
+test_target <- as.factor(iris[-ran,"Species"])
+test_target
+
+library(caret)
+
+options(width = 100); (conf <- confusionMatrix(data= pr, reference = test_target))
+
+plot(conf$table,main="Confusion Matrix", xlab="Test", ylab="kNN",shade=T)
+
+conf
+```
+
+Da die Sensitivität und Spezifizität für alle drei Varieblen sehr nah an 1 sind, kann man sagen das diese Resultate sehr gut sind.
+
+
+### Grafische Darstellung der ConfusionMatrix
+
+```{r start}
+plot(conf$table,main="Confusion Matrix", xlab="Test", ylab="kNN",shade=T)
+```
+
+## 2. Aufgabe
+
+### Daten Laden
+
+```{r start}
+library(classifly)
+data("olives")
+summary(olives)
+```
+### Führe eine lineare Diskriminanzanalyse durch, bei der du die Unterregion 'Area' durch die Fettsäuren erklärst. (R: library(MASS); lda)
+
+```{r start}
+library(dplyr)
+lda = MASS:::lda(Area~.,dplyr::select(olives, -c("eicosenoic", "Region")))
+lda
+```
+
+### Ermittle die Confusionmatrix (False Positives, False Negatives, True Positives, True Negatives) der Klassifikation und die Sensitivität und Spezifizität. Interpretiere die Vorhersagequalität.
+
+```{r start}
+library(klaR)
+pr <- predict(lda)$class
+test_daten <- as.factor(olives[,"Area"])
+options(width = 100); (conf <- confusionMatrix(data= pr, reference = test_daten))
+plot(conf$table,main="Confusion Matrix", xlab="Test", ylab="LDA",shade=T)
+
+```
+Da die Sensitivität und Spezifizität für alle Varieblen sehr nah an 1 sind, kann man sagen das diese Resultate sehr gut sind.
+
+### Führe eine quadratische Diskriminanzanalyse durch, bei der du die Unterregion 'Area' durch die Fettsäuren erklärst. (R: library(MASS); qda)
+
+
+```{r start}
+klaR:::partimat(Area~stearic+oleic,data=dplyr::select(olives, -c("eicosenoic", "Region")),method="lda")
+```
+
+###Ermittle die Confusionmatrix (False Positives, False Negatives, True Positives, True Negatives) der Klassifikation und die Sensitivität und Spezifizität. Interpretiere die Vorhersagequalität und vergleich sie mit der linearen Diskriminanzanalyse.
+
+```{r start}
+qda = MASS:::qda(Area~.,dplyr::select(olives, -c("eicosenoic", "Region")))
+qda
+```
+
+### Ermittle die Confusionmatrix (False Positives, False Negatives, True Positives, True Negatives) der Klassifikation und die Sensitivität und Spezifizität. Interpretiere die Vorhersagequalität und vergleich sie mit der linearen Diskriminanzanalyse.
+
+
+```{r start}
+library(klaR)
+pr <- predict(qda)$class
+test_daten <- as.factor(olives[,"Area"])
+options(width = 100); (conf <- confusionMatrix(data= pr, reference = test_daten))
+plot(conf$table,main="Confusion Matrix", xlab="Test", ylab="LDA",shade=T)
+
+```
+
+
+
+
